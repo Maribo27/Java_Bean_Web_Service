@@ -1,5 +1,6 @@
 package by.maribo.web_service;
 
+import by.maribo.web_service.domain.Item;
 import org.apache.thrift.TException;
 
 import java.util.List;
