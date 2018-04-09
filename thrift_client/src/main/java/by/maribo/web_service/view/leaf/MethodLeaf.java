@@ -1,4 +1,4 @@
-package by.maribo.web_service.view;
+package by.maribo.web_service.view.leaf;
 
 import by.maribo.web_service.entity.Method;
 
@@ -8,12 +8,12 @@ public class MethodLeaf {
     private DefaultMutableTreeNode node;
     private Method method;
 
-    MethodLeaf(Method method, boolean allowsChildren) {
+    public MethodLeaf(Method method, boolean allowsChildren) {
         this.method = method;
         node = new DefaultMutableTreeNode(method.getName(), allowsChildren);
     }
 
-    DefaultMutableTreeNode getNode() {
+    public DefaultMutableTreeNode getNode() {
         return node;
     }
 

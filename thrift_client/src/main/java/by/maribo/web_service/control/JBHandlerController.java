@@ -27,6 +27,24 @@ public class JBHandlerController {
         return client.getAllMethods();
     }
 
+    public void addMethod(Method method) {
+    }
+
+    public void deleteMethod(Method method){
+    }
+
+    public void modifyMethod(int id, Method method){
+    }
+
+    public void addEntity(Entity entity, String entityType){
+    }
+
+    public void deleteEntity(Entity entity, String entityType){
+    }
+
+    public void modifyEntity(int id, Entity entity, String entityType){
+    }
+
     public void showDescription(String description) {
         window.showDescription(description);
     }
