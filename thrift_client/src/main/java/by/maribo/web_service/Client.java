@@ -65,12 +65,24 @@ public class Client {
 	}
 
 	public List<Entity> getAllEntities(String entityType){
-		try {
+		/*try {
 			return client.getAllEntities(entityType);
 		} catch (TException e) {
 			log.error(e.getMessage());
 		}
-		return new ArrayList<>();
+		return new ArrayList<>();*/
+		List<Entity> entities = new ArrayList<>();
+		Entity entity1 = new Entity();
+		entity1.setId(1);
+		entity1.setName("Lol");
+		entity1.setDescription("axavsebg");
+        entities.add(entity1);
+		Entity entity2 = new Entity();
+		entity2.setId(2);
+		entity2.setName("Kek");
+		entity2.setDescription("axebg");
+		entities.add(entity2);
+		return entities;
 	}
 
 	public void addEntity(Entity entity, String entityType){
