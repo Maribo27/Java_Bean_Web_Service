@@ -1,11 +1,11 @@
-package by.maribo.web_service.dao;
+package by.maribo.web_service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class Connector {
+class Connector {
 	private static final String RESOURCE_NAME = "database";
 	private static final String PASSWORD = "db.password";
 	private static final String USER = "db.user";

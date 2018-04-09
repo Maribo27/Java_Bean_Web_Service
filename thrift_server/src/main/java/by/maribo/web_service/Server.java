@@ -13,8 +13,8 @@ public class Server {
 	public void start() {
 		try {
 			TServerSocket serverSocket = new TServerSocket(7911);
-			CrawlingHandler handler = new CrawlingHandler();
-			CrawlingService.Processor<CrawlingService.Iface> processor = new CrawlingService.Processor<>(handler);
+			HandbookHandler handler = new HandbookHandler();
+			HandbookServer.Processor<HandbookServer.Iface> processor = new HandbookServer.Processor<>(handler);
 
 			TServer tServer = new TThreadPoolServer(new TThreadPoolServer.Args(serverSocket).processor(processor));
 
