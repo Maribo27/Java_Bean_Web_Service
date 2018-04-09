@@ -32,4 +32,9 @@ public class Window {
 		mainFrame.setVisible(true);
 		mainFrame.setLocationRelativeTo(null);
 	}
+
+	public void showDescription(String description) {
+		workPanel.showDescription(description);
+		mainFrame.repaint();
+	}
 }

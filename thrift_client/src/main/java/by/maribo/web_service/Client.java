@@ -36,8 +36,8 @@ public class Client {
 			return client.getAllMethods();
 		} catch (TException e) {
 			log.error(e.getMessage());
+            throw new EntitiesNotFoundException(e);
 		}
-		return new ArrayList<>();
 	}
 
 	public void addMethod(Method method) {
@@ -45,6 +45,7 @@ public class Client {
 			client.addMethod(method);
 		} catch (TException e) {
 			log.error(e.getMessage());
+            throw new EntitiesNotFoundException(e);
 		}
 	}
 
@@ -53,6 +54,7 @@ public class Client {
 			client.deleteMethod(method);
 		} catch (TException e) {
 			log.error(e.getMessage());
+            throw new EntitiesNotFoundException(e);
 		}
 	}
 
@@ -61,6 +63,7 @@ public class Client {
 			client.modifyMethod(id, method);
 		} catch (TException e) {
 			log.error(e.getMessage());
+            throw new EntitiesNotFoundException(e);
 		}
 	}
 
@@ -69,8 +72,8 @@ public class Client {
 			return client.getAllEntities(entityType);
 		} catch (TException e) {
 			log.error(e.getMessage());
+			throw new EntitiesNotFoundException(e);
 		}
-		return new ArrayList<>();
 	}
 
 	public void addEntity(Entity entity, String entityType){
@@ -78,6 +81,7 @@ public class Client {
 			client.addEntity(entity, entityType);
 		} catch (TException e) {
 			log.error(e.getMessage());
+            throw new EntitiesNotFoundException(e);
 		}
 	}
 
@@ -86,6 +90,7 @@ public class Client {
 			client.deleteEntity(entity, entityType);
 		} catch (TException e) {
 			log.error(e.getMessage());
+            throw new EntitiesNotFoundException(e);
 		}
 	}
 
@@ -94,6 +99,7 @@ public class Client {
 			client.modifyEntity(id, entity, entityType);
 		} catch (TException e) {
 			log.error(e.getMessage());
+            throw new EntitiesNotFoundException(e);
 		}
 	}
 }

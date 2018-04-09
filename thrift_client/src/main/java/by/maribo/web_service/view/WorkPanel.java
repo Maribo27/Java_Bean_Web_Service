@@ -30,4 +30,8 @@ public class WorkPanel {
 	public JPanel getPanel() {
 		return panel;
 	}
+
+	public void showDescription(String description) {
+		textArea.setText(description);
+	}
 }

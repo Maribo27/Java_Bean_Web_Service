@@ -2,12 +2,14 @@ package by.maribo.web_service.view;
 
 import by.maribo.web_service.control.JBHandlerController;
 import by.maribo.web_service.entity.Entity;
+import by.maribo.web_service.entity.Method;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TreePanel {
 
@@ -16,40 +18,50 @@ public class TreePanel {
 	private JTree tree;
 	private DefaultTreeModel treeModel;
 	private JBHandlerController controller;
+    private List<EntityLeaf> allEntities;
+    private List<MethodLeaf> allMethods;
 
-	public TreePanel(JBHandlerController controller) {
+
+    public TreePanel(JBHandlerController controller) {
 	    this.controller = controller;
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
+		allEntities = new ArrayList<>();
+		allMethods = new ArrayList<>();
 
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("JavaBean Handbook", true);
 
 		java.util.List<Entity> entities = controller.getAllEntities("type");
 
-		DefaultMutableTreeNode javaBean = new DefaultMutableTreeNode(entities.get(0).getName(), true);
-		root.add(javaBean);
+		EntityLeaf javaBean = new EntityLeaf(entities.get(0), true);
+        allEntities.add(javaBean);
+		DefaultMutableTreeNode javaBeanNode = javaBean.getNode();
+        root.add(javaBeanNode);
 
 		DefaultMutableTreeNode method = new DefaultMutableTreeNode("Методы", true);
-		javaBean.add(method);
-		createLeaves(method, "method");
+        javaBeanNode.add(method);
+		createMethods(method);
+
 		DefaultMutableTreeNode property = new DefaultMutableTreeNode("Свойства", true);
-		javaBean.add(property);
+        javaBeanNode.add(property);
 		createLeaves(property, "property");
-		DefaultMutableTreeNode rule = new DefaultMutableTreeNode("Общее", true);
-		javaBean.add(rule);
+        DefaultMutableTreeNode rule = new DefaultMutableTreeNode("Общее", true);
+        javaBeanNode.add(rule);
 		createLeaves(rule, "rule");
 
-        DefaultMutableTreeNode enterpriseJavaBean = new DefaultMutableTreeNode(entities.get(1).getName(), true);
-        root.add(enterpriseJavaBean);
+        EntityLeaf enterpriseJavaBean = new EntityLeaf(entities.get(1), true);
+        allEntities.add(enterpriseJavaBean);
+        DefaultMutableTreeNode enterpriseJavaBeanNode = enterpriseJavaBean.getNode();
+        root.add(enterpriseJavaBeanNode);
 
-		DefaultMutableTreeNode info = new DefaultMutableTreeNode("Общее", true);
-		enterpriseJavaBean.add(info);
+        DefaultMutableTreeNode info = new DefaultMutableTreeNode("Общее", true);
+        enterpriseJavaBeanNode.add(info);
 		createLeaves(info, "ejb_info");
-		DefaultMutableTreeNode type = new DefaultMutableTreeNode("Типы", true);
-		enterpriseJavaBean.add(type);
+        DefaultMutableTreeNode type = new DefaultMutableTreeNode("Типы", true);
+        enterpriseJavaBeanNode.add(type);
 		createLeaves(type, "ejb_type");
-		DefaultMutableTreeNode role = new DefaultMutableTreeNode("Роли", true);
-		enterpriseJavaBean.add(role);
+        DefaultMutableTreeNode role = new DefaultMutableTreeNode("Роли", true);
+        enterpriseJavaBeanNode.add(role);
 		createLeaves(role, "role");
 
 		treeModel = new DefaultTreeModel(root, true);
@@ -57,7 +69,15 @@ public class TreePanel {
 		tree.setRootVisible(false);
 
 		tree.addTreeSelectionListener(e -> {
-			DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
+            for (EntityLeaf leaf : allEntities) {
+                DefaultMutableTreeNode nodeFromList = leaf.getNode();
+                boolean selected = nodeFromList.equals(selectedNode);
+                if (selected) {
+                    controller.showDescription(leaf.getDescription());
+                    break;
+                }
+            }
 		});
 
 		pane = new JScrollPane(tree, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -74,8 +94,18 @@ public class TreePanel {
 	private void createLeaves(DefaultMutableTreeNode rootNode, String type) {
         java.util.List<Entity> entities = controller.getAllEntities(type);
         for (Entity entity : entities) {
-	        DefaultMutableTreeNode node = new DefaultMutableTreeNode(entity.getName(), false);
-	        rootNode.add(node);
+	        EntityLeaf leaf = new EntityLeaf(entity, false);
+            allEntities.add(leaf);
+            rootNode.add(leaf.getNode());
+        }
+    }
+
+    private void createMethods(DefaultMutableTreeNode rootNode) {
+        java.util.List<Method> methods = controller.getAllMethods();
+        for (Method method : methods) {
+            MethodLeaf leaf = new MethodLeaf(method, false);
+            allMethods.add(leaf);
+            rootNode.add(leaf.getNode());
         }
     }
 }
