@@ -57,15 +57,23 @@ public class TreePanel {
 		tree.setRootVisible(false);
 
 		tree.addTreeSelectionListener(e -> {
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
+            String selectedNode = e.getPath().getLastPathComponent().toString();
             for (EntityLeaf leaf : allEntities) {
-                DefaultMutableTreeNode nodeFromList = leaf.getNode();
+                String nodeFromList = leaf.getName();
                 boolean selected = nodeFromList.equals(selectedNode);
                 if (selected) {
                     controller.showDescription(leaf.getDescription());
                     break;
                 }
             }
+			for (MethodLeaf leaf : allMethods) {
+				String nodeFromList = leaf.getName();
+				boolean selected = nodeFromList.equals(selectedNode);
+				if (selected) {
+					controller.showDescription(leaf.getDescription());
+					break;
+				}
+			}
 		});
 
 		pane = new JScrollPane(tree, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
