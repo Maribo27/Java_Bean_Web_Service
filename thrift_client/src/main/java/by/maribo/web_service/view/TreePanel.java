@@ -26,21 +26,45 @@ public class TreePanel {
 
 		java.util.List<Entity> entities = controller.getAllEntities("type");
 
-		DefaultMutableTreeNode javaBean = new DefaultMutableTreeNode(entities.get(0), true);
+		DefaultMutableTreeNode javaBean = new DefaultMutableTreeNode(entities.get(0).getName(), true);
 		root.add(javaBean);
-        DefaultMutableTreeNode property = new DefaultMutableTreeNode(entities.get(0), true);
-        root.add(javaBean);
 
-        DefaultMutableTreeNode enterpriseJavaBean = new DefaultMutableTreeNode(entities.get(1), true);
+		DefaultMutableTreeNode method = new DefaultMutableTreeNode("Методы", true);
+		javaBean.add(method);
+		createLeaves(method, "method");
+		DefaultMutableTreeNode property = new DefaultMutableTreeNode("Свойства", true);
+		javaBean.add(property);
+		createLeaves(property, "property");
+		DefaultMutableTreeNode rule = new DefaultMutableTreeNode("Общее", true);
+		javaBean.add(rule);
+		createLeaves(rule, "rule");
+
+        DefaultMutableTreeNode enterpriseJavaBean = new DefaultMutableTreeNode(entities.get(1).getName(), true);
         root.add(enterpriseJavaBean);
+
+		DefaultMutableTreeNode info = new DefaultMutableTreeNode("Общее", true);
+		enterpriseJavaBean.add(info);
+		createLeaves(info, "ejb_info");
+		DefaultMutableTreeNode type = new DefaultMutableTreeNode("Типы", true);
+		enterpriseJavaBean.add(type);
+		createLeaves(type, "ejb_type");
+		DefaultMutableTreeNode role = new DefaultMutableTreeNode("Роли", true);
+		enterpriseJavaBean.add(role);
+		createLeaves(role, "role");
 
 		treeModel = new DefaultTreeModel(root, true);
 		tree = new JTree(treeModel);
 		tree.setRootVisible(false);
 
+		tree.addTreeSelectionListener(e -> {
+			DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
+		});
+
 		pane = new JScrollPane(tree, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		pane.setMaximumSize(new Dimension(200, 600));
+		pane.setMinimumSize(new Dimension(200, 600));
+		pane.setPreferredSize(new Dimension(200, 600));
 		panel.add(pane);
-		panel.setPreferredSize(new Dimension(700,700));
 	}
 
 	public JPanel getPanel() {
@@ -49,5 +73,9 @@ public class TreePanel {
 
 	private void createLeaves(DefaultMutableTreeNode rootNode, String type) {
         java.util.List<Entity> entities = controller.getAllEntities(type);
+        for (Entity entity : entities) {
+	        DefaultMutableTreeNode node = new DefaultMutableTreeNode(entity.getName(), false);
+	        rootNode.add(node);
+        }
     }
 }

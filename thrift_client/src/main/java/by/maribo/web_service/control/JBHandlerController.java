@@ -11,11 +11,11 @@ public class JBHandlerController {
 	private Window window;
 
 	public JBHandlerController() {
-		client = new Client();
-		window = new Window(this);
 	}
 	public void startClient() {
+		client = new Client();
 		client.connect();
+		window = new Window(this);
 	}
 
 	public List<Entity> getAllEntities(String tableName) {

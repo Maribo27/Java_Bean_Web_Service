@@ -6,22 +6,27 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Window {
-	private JFrame mainFrame = new JFrame("POP3 Client");
+	private JFrame mainFrame;
+	private JPanel mainPanel;
 	private TreePanel treePanel;
 	private WorkPanel workPanel;
 
 	public Window(JBHandlerController controller){
-		mainFrame.setLayout(new FlowLayout());
+		mainFrame = new JFrame("JavaBeans");
+		mainPanel = new JPanel();
 		mainFrame.setPreferredSize(new Dimension(1000,600));
 		mainFrame.setBackground(Color.DARK_GRAY);
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(false);
 		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		mainFrame.add(mainPanel);
+
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 
 		treePanel = new TreePanel(controller);
-		mainFrame.add(treePanel.getPanel());
+		mainPanel.add(treePanel.getPanel());
 		workPanel = new WorkPanel(controller);
-		mainFrame.add(workPanel.getPanel());
+		mainPanel.add(workPanel.getPanel());
 
 		mainFrame.pack();
 		mainFrame.setVisible(true);

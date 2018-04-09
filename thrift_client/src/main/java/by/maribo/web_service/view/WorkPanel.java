@@ -16,6 +16,7 @@ public class WorkPanel {
 	public WorkPanel(JBHandlerController controller) {
 		panel = new JPanel();
 		textArea = new JTextArea();
+		textArea.setPreferredSize(new Dimension(700, 500));
 		panel.add(textArea);
 		addButton = new JButton("Добавить");
 		panel.add(addButton);
@@ -23,6 +24,7 @@ public class WorkPanel {
 		panel.add(changeButton);
 		deleteButton = new JButton("Удалить");
 		panel.add(deleteButton);
+		panel.setPreferredSize(new Dimension(700, 600));
 	}
 
 	public JPanel getPanel() {

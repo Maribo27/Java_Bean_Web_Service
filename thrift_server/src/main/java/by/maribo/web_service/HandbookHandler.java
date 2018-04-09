@@ -18,10 +18,10 @@ public class HandbookHandler implements HandbookServer.Iface {
 	private static final String DELETE_METHOD_QUERY = "DELETE FROM method WHERE id=?";
 	private static final String UPDATE_METHOD_QUERY = "UPDATE method SET name=?, description=?, necessity=? WHERE id=?";
 
-	private static final String GET_ALL_ENTITIES_QUERY = "SELECT id, name, description FROM ?";
-	private static final String ADD_ENTITY_QUERY = "INSERT INTO ?(name, description) VALUES(?, ?)";
-	private static final String DELETE_ENTITY_QUERY = "DELETE FROM ? WHERE id=?";
-	private static final String UPDATE_ENTITY_QUERY = "UPDATE ? SET name=?, description=? WHERE id=?";
+	private static final String GET_ALL_ENTITIES_QUERY = "SELECT id, name, description FROM %s";
+	private static final String ADD_ENTITY_QUERY = "INSERT INTO  %s(name, description) VALUES(?, ?)";
+	private static final String DELETE_ENTITY_QUERY = "DELETE FROM  %s WHERE id=?";
+	private static final String UPDATE_ENTITY_QUERY = "UPDATE  %s SET name=?, description=? WHERE id=?";
 
 
 	@Override
@@ -146,8 +146,8 @@ public class HandbookHandler implements HandbookServer.Iface {
 
 		try {
 			connection = Connector.getConnection();
-			PreparedStatement statement = connection.prepareStatement(GET_ALL_ENTITIES_QUERY);
-			statement.setString(1, entityType);
+			String query = String.format(GET_ALL_ENTITIES_QUERY, entityType);
+			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
 
 			if (!resultSet.isBeforeFirst()) {
@@ -184,7 +184,8 @@ public class HandbookHandler implements HandbookServer.Iface {
 
 		try {
 			connection = Connector.getConnection();
-			PreparedStatement statement = connection.prepareStatement(ADD_ENTITY_QUERY);
+			String query = String.format(ADD_ENTITY_QUERY, entityType);
+			PreparedStatement statement = connection.prepareStatement(query);
 
 			statement.setString(1, entityType);
 			statement.setString(2, entity.getName());
@@ -210,7 +211,8 @@ public class HandbookHandler implements HandbookServer.Iface {
 
 		try {
 			connection = Connector.getConnection();
-			PreparedStatement statement = connection.prepareStatement(DELETE_ENTITY_QUERY);
+			String query = String.format(DELETE_ENTITY_QUERY, entityType);
+			PreparedStatement statement = connection.prepareStatement(query);
 
 			statement.setString(1, entityType);
 			statement.setInt(2, entity.getId());
@@ -235,7 +237,8 @@ public class HandbookHandler implements HandbookServer.Iface {
 
 		try {
 			connection = Connector.getConnection();
-			PreparedStatement statement = connection.prepareStatement(UPDATE_ENTITY_QUERY);
+			String query = String.format(UPDATE_ENTITY_QUERY, entityType);
+			PreparedStatement statement = connection.prepareStatement(query);
 
 			statement.setString(1, entityType);
 			statement.setString(2, entity.getName());
