@@ -37,32 +37,20 @@ public class TreePanel {
         allEntities.add(javaBean);
 		DefaultMutableTreeNode javaBeanNode = javaBean.getNode();
         root.add(javaBeanNode);
-
 		DefaultMutableTreeNode method = new DefaultMutableTreeNode("Методы", true);
         javaBeanNode.add(method);
 		createMethods(method);
+        createParentLeaves(javaBeanNode, "Свойства", "property");
+        createParentLeaves(javaBeanNode, "Общее", "rule");
 
-		DefaultMutableTreeNode property = new DefaultMutableTreeNode("Свойства", true);
-        javaBeanNode.add(property);
-		createLeaves(property, "property");
-        DefaultMutableTreeNode rule = new DefaultMutableTreeNode("Общее", true);
-        javaBeanNode.add(rule);
-		createLeaves(rule, "rule");
 
         EntityLeaf enterpriseJavaBean = new EntityLeaf(entities.get(1), true);
         allEntities.add(enterpriseJavaBean);
         DefaultMutableTreeNode enterpriseJavaBeanNode = enterpriseJavaBean.getNode();
         root.add(enterpriseJavaBeanNode);
-
-        DefaultMutableTreeNode info = new DefaultMutableTreeNode("Общее", true);
-        enterpriseJavaBeanNode.add(info);
-		createLeaves(info, "ejb_info");
-        DefaultMutableTreeNode type = new DefaultMutableTreeNode("Типы", true);
-        enterpriseJavaBeanNode.add(type);
-		createLeaves(type, "ejb_type");
-        DefaultMutableTreeNode role = new DefaultMutableTreeNode("Роли", true);
-        enterpriseJavaBeanNode.add(role);
-		createLeaves(role, "role");
+        createParentLeaves(enterpriseJavaBeanNode, "Общее", "ejb_info");
+        createParentLeaves(enterpriseJavaBeanNode, "Типы", "ejb_type");
+        createParentLeaves(enterpriseJavaBeanNode, "Роли", "role");
 
 		treeModel = new DefaultTreeModel(root, true);
 		tree = new JTree(treeModel);
@@ -90,6 +78,12 @@ public class TreePanel {
 	public JPanel getPanel() {
 		return panel;
 	}
+
+    private void createParentLeaves(DefaultMutableTreeNode rootNode, String name, String type) {
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(name, true);
+        rootNode.add(node);
+        createLeaves(node, type);
+    }
 
 	private void createLeaves(DefaultMutableTreeNode rootNode, String type) {
         java.util.List<Entity> entities = controller.getAllEntities(type);
