@@ -48,4 +48,8 @@ public class JBHandlerController {
     public void showDescription(String description) {
         window.showDescription(description);
     }
+
+	public void update() {
+		window.update();
+	}
 }

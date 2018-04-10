@@ -35,6 +35,7 @@ public class TreePanel {
         panel.setLayout(new BorderLayout());
         allEntities = new ArrayList<>();
         allMethods = new ArrayList<>();
+        allParents = new ArrayList<>();
 
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("JavaBean Handbook", true);
 
@@ -65,6 +66,7 @@ public class TreePanel {
 
         tree.addTreeSelectionListener(e -> {
             selectEntity(controller, e);
+            controller.update();
         });
 
         pane = new JScrollPane(tree, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -83,7 +85,7 @@ public class TreePanel {
                 controller.showDescription(leaf.getDescription());
                 currentEntity = leaf;
                 currentMethod = null;
-                break;
+                return;
             }
         }
         for (MethodLeaf leaf : allMethods) {
@@ -93,10 +95,9 @@ public class TreePanel {
                 controller.showDescription(leaf.getDescription());
                 currentEntity = null;
                 currentMethod = leaf;
-                break;
+	            return;
             }
         }
-        tree.updateUI();
     }
 
     public JPanel getPanel() {

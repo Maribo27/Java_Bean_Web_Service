@@ -37,4 +37,9 @@ public class Window {
 		workPanel.showDescription(description);
 		mainFrame.repaint();
 	}
+
+	public void update() {
+		treePanel.getPanel().updateUI();
+		workPanel.getPanel().updateUI();
+	}
 }
