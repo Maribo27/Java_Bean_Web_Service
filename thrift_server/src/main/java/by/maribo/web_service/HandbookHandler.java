@@ -187,9 +187,8 @@ public class HandbookHandler implements HandbookServer.Iface {
 			String query = String.format(ADD_ENTITY_QUERY, entityType);
 			PreparedStatement statement = connection.prepareStatement(query);
 
-			statement.setString(1, entityType);
-			statement.setString(2, entity.getName());
-			statement.setString(3, entity.getDescription());
+			statement.setString(1, entity.getName());
+			statement.setString(2, entity.getDescription());
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -214,8 +213,7 @@ public class HandbookHandler implements HandbookServer.Iface {
 			String query = String.format(DELETE_ENTITY_QUERY, entityType);
 			PreparedStatement statement = connection.prepareStatement(query);
 
-			statement.setString(1, entityType);
-			statement.setInt(2, entity.getId());
+			statement.setInt(1, entity.getId());
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -240,10 +238,9 @@ public class HandbookHandler implements HandbookServer.Iface {
 			String query = String.format(UPDATE_ENTITY_QUERY, entityType);
 			PreparedStatement statement = connection.prepareStatement(query);
 
-			statement.setString(1, entityType);
-			statement.setString(2, entity.getName());
-			statement.setString(3, entity.getDescription());
-			statement.setInt(4, entity.getId());
+			statement.setString(1, entity.getName());
+			statement.setString(2, entity.getDescription());
+			statement.setInt(3, entity.getId());
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
