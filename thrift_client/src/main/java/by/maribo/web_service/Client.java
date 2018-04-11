@@ -8,26 +8,20 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-	private static final Logger log = LoggerFactory.getLogger(Client.class);
 	private HandbookServer.Client client;
 
 	public void connect() {
 		try {
 			TTransport transport = new TSocket("0.0.0.0", 7911);
 			transport.open();
-
 			TProtocol protocol = new TBinaryProtocol(transport);
 			client = new HandbookServer.Client(protocol);
-
-		} catch (TTransportException | Exception e) {
-			log.error(e.getMessage());
+		} catch (TTransportException e) {
+			throw new ClientConnectionException("Cannot connect to server");
 		}
 	}
 
@@ -35,8 +29,7 @@ public class Client {
 		try {
 			return client.getAllMethods();
 		} catch (TException e) {
-			log.error(e.getMessage());
-            throw new EntitiesNotFoundException(e);
+            throw new EntitiesNotFoundException("Methods not found");
 		}
 	}
 
@@ -44,8 +37,7 @@ public class Client {
 		try {
 			client.addMethod(method);
 		} catch (TException e) {
-			log.error(e.getMessage());
-            throw new EntitiesNotFoundException(e);
+            throw new EntitiesNotFoundException("Cannot add method");
 		}
 	}
 
@@ -53,8 +45,7 @@ public class Client {
 		try {
 			client.deleteMethod(method);
 		} catch (TException e) {
-			log.error(e.getMessage());
-            throw new EntitiesNotFoundException(e);
+            throw new EntitiesNotFoundException("Cannot delete method");
 		}
 	}
 
@@ -62,8 +53,7 @@ public class Client {
 		try {
 			client.modifyMethod(id, method);
 		} catch (TException e) {
-			log.error(e.getMessage());
-            throw new EntitiesNotFoundException(e);
+            throw new EntitiesNotFoundException("Cannot change method");
 		}
 	}
 
@@ -71,8 +61,7 @@ public class Client {
 		try {
 			return client.getAllEntities(entityType);
 		} catch (TException e) {
-			log.error(e.getMessage());
-			throw new EntitiesNotFoundException(e);
+			throw new EntitiesNotFoundException("Entities not found");
 		}
 	}
 
@@ -80,8 +69,7 @@ public class Client {
 		try {
 			client.addEntity(entity, entityType);
 		} catch (TException e) {
-			log.error(e.getMessage());
-            throw new EntitiesNotFoundException(e);
+            throw new EntitiesNotFoundException("Cannot add entity");
 		}
 	}
 
@@ -89,8 +77,7 @@ public class Client {
 		try {
 			client.deleteEntity(entity, entityType);
 		} catch (TException e) {
-			log.error(e.getMessage());
-            throw new EntitiesNotFoundException(e);
+            throw new EntitiesNotFoundException("Cannot delete entity");
 		}
 	}
 
@@ -98,8 +85,7 @@ public class Client {
 		try {
 			client.modifyEntity(id, entity, entityType);
 		} catch (TException e) {
-			log.error(e.getMessage());
-            throw new EntitiesNotFoundException(e);
+            throw new EntitiesNotFoundException("Cannot change entity");
 		}
 	}
 }

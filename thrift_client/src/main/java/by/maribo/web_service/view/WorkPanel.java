@@ -1,60 +1,83 @@
 package by.maribo.web_service.view;
 
 import by.maribo.web_service.control.JBHandlerController;
-import by.maribo.web_service.entity.Entity;
-import by.maribo.web_service.entity.Method;
+import by.maribo.web_service.view.dialog.EntityChanging;
+import by.maribo.web_service.view.dialog.EntityCreating;
+import by.maribo.web_service.view.dialog.MethodChanging;
+import by.maribo.web_service.view.dialog.MethodCreating;
 import by.maribo.web_service.view.leaf.EntityLeaf;
 import by.maribo.web_service.view.leaf.MethodLeaf;
-import by.maribo.web_service.view.leaf.SimpleLeaf;
+import by.maribo.web_service.view.styled_component.DarkButton;
+import by.maribo.web_service.view.styled_component.Text;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class WorkPanel {
+class WorkPanel {
 
     private JTextArea textArea;
     private JPanel panel;
     private JButton addButton;
-    private JButton changeButton;
-    private JButton deleteButton;
+	private JButton changeButton;
+	private JButton deleteButton;
 
-    public WorkPanel(JBHandlerController controller) {
+	WorkPanel(JBHandlerController controller) {
         panel = new JPanel();
-        textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(700, 500));
+        panel.setBackground(Color.DARK_GRAY);
+
+        textArea = new Text(700, 400).getTextArea();
         panel.add(textArea);
-        addButton = new JButton("Добавить");
-        addButton.addActionListener(e -> {
-            /*controller.*/
+
+        addButton = new DarkButton("Добавить", false).getButton();
+	    addButton.addActionListener(e -> {
+            String table = controller.getTableName();
+            if (!table.equalsIgnoreCase("method")) {
+                new EntityCreating(controller, table);
+            } else {
+                new MethodCreating(controller);
+            }
         });
         panel.add(addButton);
-        changeButton = new JButton("Изменить");
+
+        changeButton = new DarkButton("Изменить", false).getButton();
         changeButton.addActionListener(e -> {
-            /*EntityLeaf entity = controller.getCurrentEntity();
+            String table = controller.getTableName();
+            EntityLeaf entity = controller.getCurrentEntity();
             MethodLeaf method = controller.getCurrentMethod();
-            SimpleLeaf parent = controller.getCurrentParent();
-            if (entity != null) {
-                controller.modifyEntity(entity., entity,);
-            } else if (method != null) {
-
+            if (!table.equalsIgnoreCase("method")) {
+                new EntityChanging(controller, entity.getTable(), entity.getEntity());
             } else {
-
-            }*/
+                new MethodChanging(controller, method.getMethod());
+            }
         });
         panel.add(changeButton);
-        deleteButton = new JButton("Удалить");
-        deleteButton.addActionListener(e -> {
-            /*controller.*/
+
+        deleteButton = new DarkButton("Удалить", false).getButton();
+	    deleteButton.addActionListener(e -> {
+            String table = controller.getTableName();
+            EntityLeaf entity = controller.getCurrentEntity();
+            MethodLeaf method = controller.getCurrentMethod();
+            if (!table.equalsIgnoreCase("method")) {
+                controller.deleteEntity(entity.getEntity(), entity.getTable());
+            } else if (method != null) {
+                controller.deleteMethod(method.getMethod());
+            }
         });
         panel.add(deleteButton);
         panel.setPreferredSize(new Dimension(700, 600));
     }
 
-    public JPanel getPanel() {
+    JPanel getPanel() {
         return panel;
     }
 
-    public void showDescription(String description) {
+    void showDescription(String description) {
         textArea.setText(description);
     }
+
+	void updateButtons(boolean add, boolean change, boolean delete) {
+		addButton.setVisible(add);
+		changeButton.setVisible(change);
+		deleteButton.setVisible(delete);
+	}
 }

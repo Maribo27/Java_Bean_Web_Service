@@ -1,7 +1,7 @@
 package by.maribo.web_service;
 
-public class EntitiesNotFoundException extends RuntimeException {
-    public EntitiesNotFoundException(Throwable e) {
-        super(e);
+class EntitiesNotFoundException extends RuntimeException {
+    EntitiesNotFoundException(String message) {
+        super(message);
     }
 }
