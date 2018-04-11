@@ -5,8 +5,13 @@ import by.maribo.web_service.entity.Entity;
 import by.maribo.web_service.view.styled_component.DarkButton;
 import by.maribo.web_service.view.styled_component.DarkPanel;
 import by.maribo.web_service.view.styled_component.Text;
+import by.maribo.web_service.view.styled_component.TitledScrollPane;
+import com.sun.java.swing.plaf.windows.WindowsScrollBarUI;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.multi.MultiScrollBarUI;
 import java.awt.*;
 
 import static by.maribo.web_service.view.dialog.Sizer.PANEL_WIDTH;
@@ -27,9 +32,8 @@ public class EntityCreating {
 		name = new Text("Имя", PANEL_WIDTH, 30).getTextArea();
 		panel.add(name);
 
-		description = new Text("Описание", PANEL_WIDTH, 500).getTextArea();
-		JScrollPane scroll = new JScrollPane (description, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		panel.add(scroll);
+		description = new Text(PANEL_WIDTH, 500).getTextArea();
+		panel.add(new TitledScrollPane(description, "Описание").getScroll());
 
 		JButton decline = new DarkButton("Отклонить", true).getButton();
 		decline.addActionListener(e -> dialog.dispose());

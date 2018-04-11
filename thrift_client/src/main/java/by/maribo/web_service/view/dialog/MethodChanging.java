@@ -2,12 +2,10 @@ package by.maribo.web_service.view.dialog;
 
 import by.maribo.web_service.control.JBHandlerController;
 import by.maribo.web_service.entity.Method;
-import by.maribo.web_service.view.styled_component.DarkButton;
-import by.maribo.web_service.view.styled_component.DarkPanel;
-import by.maribo.web_service.view.styled_component.DropdownList;
-import by.maribo.web_service.view.styled_component.Text;
+import by.maribo.web_service.view.styled_component.*;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.Objects;
 
@@ -35,11 +33,9 @@ public class MethodChanging {
 		necessity = new DropdownList().getDropdownList();
 		panel.add(necessity);
 
-		description = new Text("Описание", PANEL_WIDTH, 500).getTextArea();
+		description = new Text(PANEL_WIDTH, 500).getTextArea();
 		description.setText(method.getDescription());
-		JScrollPane scroll = new JScrollPane (description, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		panel.add(scroll);
-
+		panel.add(new TitledScrollPane(description, "Описание").getScroll());
 		JButton decline = new DarkButton("Отклонить", true).getButton();
 		decline.addActionListener(e -> dialog.dispose());
 

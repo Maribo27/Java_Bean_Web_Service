@@ -8,7 +8,7 @@ public class DarkPanel {
 
 	public DarkPanel() {
 		panel = new JPanel();
-		panel.setForeground(Color.DARK_GRAY);
+		panel.setBackground(Color.DARK_GRAY);
 	}
 
 	public JPanel getPanel() {
