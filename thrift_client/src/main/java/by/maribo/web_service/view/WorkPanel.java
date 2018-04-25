@@ -26,6 +26,7 @@ class WorkPanel {
         panel.setBackground(Color.DARK_GRAY);
 
         textArea = new Text(700, 400).getTextArea();
+        textArea.setEditable(false);
         panel.add(textArea);
 
         addButton = new DarkButton("Добавить", false).getButton();
