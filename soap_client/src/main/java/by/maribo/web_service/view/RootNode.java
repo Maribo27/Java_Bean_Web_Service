@@ -44,7 +44,6 @@ class RootNode {
 		createParentLeaves(javaBeanNode, "Свойства", "property");
 		createParentLeaves(javaBeanNode, "Общее", "rule");
 
-
 		EntityLeaf enterpriseJavaBean = new EntityLeaf(entities.get(1), true, "type");
 		allEntities.add(enterpriseJavaBean);
 		DefaultMutableTreeNode enterpriseJavaBeanNode = enterpriseJavaBean.getNode();

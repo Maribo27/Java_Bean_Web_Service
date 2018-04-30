@@ -3,16 +3,17 @@ package by.maribo.web_service;
 import by.maribo.web_service.entity.Entity;
 import by.maribo.web_service.entity.Method;
 import org.apache.axis2.AxisFault;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Client implements IJavaBeansHandbookService{
 	private final static String END_POINT = "http://localhost:8080/axis2/services/JavaBeansHandbookService?wsdl";
+	private final static Logger logger = LoggerFactory.getLogger(Client.class);
 
 	private JavaBeansHandbookServiceStub serviceStub;
 
@@ -35,6 +36,7 @@ public class Client implements IJavaBeansHandbookService{
 	@Override
 	public void addMethod(Method method) {
 		try {
+			method = encodeMethod(method);
 			JavaBeansHandbookServiceStub.Method methodFromStub = createMethod(method);
 
 			JavaBeansHandbookServiceStub.AddMethod addMethod = new JavaBeansHandbookServiceStub.AddMethod();
@@ -49,6 +51,7 @@ public class Client implements IJavaBeansHandbookService{
 	@Override
 	public void deleteMethod(Method method) {
 		try {
+			method = encodeMethod(method);
 			JavaBeansHandbookServiceStub.Method methodFromStub = createMethod(method);
 
 			JavaBeansHandbookServiceStub.DeleteMethod deleteMethod = new JavaBeansHandbookServiceStub.DeleteMethod();
@@ -63,6 +66,7 @@ public class Client implements IJavaBeansHandbookService{
 	@Override
 	public void modifyMethod(int id, Method method) {
 		try {
+			method = encodeMethod(method);
 			JavaBeansHandbookServiceStub.Method methodFromStub = createMethod(method);
 
 			JavaBeansHandbookServiceStub.ModifyMethod modifyMethod = new JavaBeansHandbookServiceStub.ModifyMethod();
@@ -90,6 +94,7 @@ public class Client implements IJavaBeansHandbookService{
 	@Override
 	public void addEntity(Entity entity, String entityType) {
 		try {
+			entity = encodeEntity(entity);
 			JavaBeansHandbookServiceStub.Entity entityFromStub = createEntity(entity);
 
 			JavaBeansHandbookServiceStub.AddEntity addEntity = new JavaBeansHandbookServiceStub.AddEntity();
@@ -105,6 +110,7 @@ public class Client implements IJavaBeansHandbookService{
 	@Override
 	public void deleteEntity(Entity entity, String entityType) {
 		try {
+			entity = encodeEntity(entity);
 			JavaBeansHandbookServiceStub.Entity entityFromStub = createEntity(entity);
 
 			JavaBeansHandbookServiceStub.DeleteEntity deleteEntity = new JavaBeansHandbookServiceStub.DeleteEntity();
@@ -120,6 +126,7 @@ public class Client implements IJavaBeansHandbookService{
 	@Override
 	public void modifyEntity(int id, Entity entity, String entityType) {
 		try {
+			entity = encodeEntity(entity);
 			JavaBeansHandbookServiceStub.Entity entityFromStub = createEntity(entity);
 
 			JavaBeansHandbookServiceStub.ModifyEntity modifyEntity = new JavaBeansHandbookServiceStub.ModifyEntity();
@@ -157,18 +164,11 @@ public class Client implements IJavaBeansHandbookService{
 			method.setId(methodFromStub.getId());
 
 			String stubName = methodFromStub.getName();
+			method.setName(encodeFromCp1251ToUtf8(stubName));
 			String description = methodFromStub.getDescription();
+			method.setDescription(encodeFromCp1251ToUtf8(description));
 			String necessity = methodFromStub.getNecessity();
-			try {
-				byte text[] = stubName.getBytes("cp1251");
-				method.setName(new String(text, "UTF-8"));
-				byte ptext[] = description.getBytes("cp1251");
-				method.setDescription(new String(ptext, "UTF-8"));
-				byte ntext[] = necessity.getBytes("cp1251");
-				method.setNecessity(new String(ntext, "UTF-8"));
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+			method.setNecessity(encodeFromCp1251ToUtf8(necessity));
 
 			methodList.add(method);
 		}
@@ -182,18 +182,49 @@ public class Client implements IJavaBeansHandbookService{
 			entity.setId(entityFromStub.getId());
 
 			String stubName = entityFromStub.getName();
+			entity.setName(encodeFromCp1251ToUtf8(stubName));
 			String description = entityFromStub.getDescription();
-			try {
-				byte text[] = stubName.getBytes("cp1251");
-				entity.setName(new String(text, "UTF-8"));
-				byte ptext[] = description.getBytes("cp1251");
-				entity.setDescription(new String(ptext, "UTF-8"));
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+			entity.setDescription(encodeFromCp1251ToUtf8(description));
 
 			entityList.add(entity);
 		}
 		return entityList;
+	}
+
+	private Method encodeMethod(Method method) {
+		String name = encodeFromUtf8ToCp1251(method.getName());
+		method.setName(name);
+		String description = encodeFromUtf8ToCp1251(method.getDescription());
+		method.setDescription(description);
+		String necessity = encodeFromUtf8ToCp1251(method.getNecessity());
+		method.setNecessity(necessity);
+		return method;
+	}
+
+	private Entity encodeEntity(Entity entity) {
+		String name = encodeFromUtf8ToCp1251(entity.getName());
+		entity.setName(name);
+		String description = encodeFromUtf8ToCp1251(entity.getDescription());
+		entity.setDescription(description);
+		return entity;
+	}
+	private String encodeFromCp1251ToUtf8(String stringToEncode) {
+		try {
+			byte text[] = stringToEncode.getBytes("cp1251");
+			return new String(text, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.info("Cannot encode string - %s - from cp-1251 to utf-8", stringToEncode);
+			return stringToEncode;
+		}
+	}
+
+	private String encodeFromUtf8ToCp1251(String stringToEncode) {
+		try {
+			byte text[] = stringToEncode.getBytes("UTF-8");
+			return new String(text, "cp1251");
+		} catch (UnsupportedEncodingException e) {
+			logger.info("Cannot encode string - %s - from utf-8 to cp-1251", stringToEncode);
+			return stringToEncode;
+		}
 	}
 }
