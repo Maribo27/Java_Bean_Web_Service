@@ -2,4 +2,7 @@
 out/
 logs/
 build/
+target/
+lib/
 *.iml
+*.exe
