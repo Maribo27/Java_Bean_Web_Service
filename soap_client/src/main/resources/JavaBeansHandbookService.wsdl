@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://maribo.by/web_service/JavaBeansHandbookService/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ax21="http://entity.web_service.maribo.by/xsd" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:tns="http://maribo.by/web_service/JavaBeansHandbookService" targetNamespace="http://maribo.by/web_service/JavaBeansHandbookService">
+    <wsdl:types>
+        <xs:schema xmlns:ax22="http://entity.web_service.maribo.by/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://maribo.by/web_service/JavaBeansHandbookService/xsd">
+            <xs:import namespace="http://entity.web_service.maribo.by/xsd"/>
+            <xs:element name="modifyMethod">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:int"/>
+                        <xs:element minOccurs="0" name="method" nillable="true" type="ax22:Method"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="modifyEntity">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:int"/>
+                        <xs:element minOccurs="0" name="entity" nillable="true" type="ax22:Entity"/>
+                        <xs:element minOccurs="0" name="entityType" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllMethods">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllMethodsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ax22:Method"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllEntities">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="entityType" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllEntitiesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ax22:Entity"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteMethod">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="method" nillable="true" type="ax22:Method"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteEntity">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="entity" nillable="true" type="ax22:Entity"/>
+                        <xs:element minOccurs="0" name="entityType" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addMethod">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="method" nillable="true" type="ax22:Method"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addEntity">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="entity" nillable="true" type="ax22:Entity"/>
+                        <xs:element minOccurs="0" name="entityType" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://entity.web_service.maribo.by/xsd">
+            <xs:complexType name="Method">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="necessity" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Entity">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="addEntityRequest">
+        <wsdl:part name="parameters" element="ns:addEntity"/>
+    </wsdl:message>
+    <wsdl:message name="deleteEntityRequest">
+        <wsdl:part name="parameters" element="ns:deleteEntity"/>
+    </wsdl:message>
+    <wsdl:message name="modifyEntityRequest">
+        <wsdl:part name="parameters" element="ns:modifyEntity"/>
+    </wsdl:message>
+    <wsdl:message name="modifyMethodRequest">
+        <wsdl:part name="parameters" element="ns:modifyMethod"/>
+    </wsdl:message>
+    <wsdl:message name="getAllMethodsRequest">
+        <wsdl:part name="parameters" element="ns:getAllMethods"/>
+    </wsdl:message>
+    <wsdl:message name="getAllMethodsResponse">
+        <wsdl:part name="parameters" element="ns:getAllMethodsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getAllEntitiesRequest">
+        <wsdl:part name="parameters" element="ns:getAllEntities"/>
+    </wsdl:message>
+    <wsdl:message name="getAllEntitiesResponse">
+        <wsdl:part name="parameters" element="ns:getAllEntitiesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="deleteMethodRequest">
+        <wsdl:part name="parameters" element="ns:deleteMethod"/>
+    </wsdl:message>
+    <wsdl:message name="addMethodRequest">
+        <wsdl:part name="parameters" element="ns:addMethod"/>
+    </wsdl:message>
+    <wsdl:portType name="JavaBeansHandbookServicePortType">
+        <wsdl:operation name="addEntity">
+            <wsdl:input message="tns:addEntityRequest" wsaw:Action="urn:addEntity"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEntity">
+            <wsdl:input message="tns:deleteEntityRequest" wsaw:Action="urn:deleteEntity"/>
+        </wsdl:operation>
+        <wsdl:operation name="modifyEntity">
+            <wsdl:input message="tns:modifyEntityRequest" wsaw:Action="urn:modifyEntity"/>
+        </wsdl:operation>
+        <wsdl:operation name="modifyMethod">
+            <wsdl:input message="tns:modifyMethodRequest" wsaw:Action="urn:modifyMethod"/>
+        </wsdl:operation>
+        <wsdl:operation name="getAllMethods">
+            <wsdl:input message="tns:getAllMethodsRequest" wsaw:Action="urn:getAllMethods"/>
+            <wsdl:output message="tns:getAllMethodsResponse" wsaw:Action="urn:getAllMethodsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getAllEntities">
+            <wsdl:input message="tns:getAllEntitiesRequest" wsaw:Action="urn:getAllEntities"/>
+            <wsdl:output message="tns:getAllEntitiesResponse" wsaw:Action="urn:getAllEntitiesResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteMethod">
+            <wsdl:input message="tns:deleteMethodRequest" wsaw:Action="urn:deleteMethod"/>
+        </wsdl:operation>
+        <wsdl:operation name="addMethod">
+            <wsdl:input message="tns:addMethodRequest" wsaw:Action="urn:addMethod"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="JavaBeansHandbookServiceSoap11Binding" type="tns:JavaBeansHandbookServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="addEntity">
+            <soap:operation soapAction="urn:addEntity" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEntity">
+            <soap:operation soapAction="urn:deleteEntity" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="modifyEntity">
+            <soap:operation soapAction="urn:modifyEntity" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="modifyMethod">
+            <soap:operation soapAction="urn:modifyMethod" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getAllMethods">
+            <soap:operation soapAction="urn:getAllMethods" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAllEntities">
+            <soap:operation soapAction="urn:getAllEntities" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteMethod">
+            <soap:operation soapAction="urn:deleteMethod" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addMethod">
+            <soap:operation soapAction="urn:addMethod" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="JavaBeansHandbookServiceSoap12Binding" type="tns:JavaBeansHandbookServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="addEntity">
+            <soap12:operation soapAction="urn:addEntity" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEntity">
+            <soap12:operation soapAction="urn:deleteEntity" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="modifyEntity">
+            <soap12:operation soapAction="urn:modifyEntity" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="modifyMethod">
+            <soap12:operation soapAction="urn:modifyMethod" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getAllMethods">
+            <soap12:operation soapAction="urn:getAllMethods" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAllEntities">
+            <soap12:operation soapAction="urn:getAllEntities" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteMethod">
+            <soap12:operation soapAction="urn:deleteMethod" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addMethod">
+            <soap12:operation soapAction="urn:addMethod" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="JavaBeansHandbookServiceHttpBinding" type="tns:JavaBeansHandbookServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="addEntity">
+            <http:operation location="addEntity"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEntity">
+            <http:operation location="deleteEntity"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="modifyEntity">
+            <http:operation location="modifyEntity"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="modifyMethod">
+            <http:operation location="modifyMethod"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getAllMethods">
+            <http:operation location="getAllMethods"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAllEntities">
+            <http:operation location="getAllEntities"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteMethod">
+            <http:operation location="deleteMethod"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addMethod">
+            <http:operation location="addMethod"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="JavaBeansHandbookService">
+        <wsdl:port name="JavaBeansHandbookServiceHttpSoap11Endpoint" binding="tns:JavaBeansHandbookServiceSoap11Binding">
+            <soap:address location="http://localhost:8080/axis2/services/JavaBeansHandbookService"/>
+        </wsdl:port>
+        <wsdl:port name="JavaBeansHandbookServiceHttpSoap12Endpoint" binding="tns:JavaBeansHandbookServiceSoap12Binding">
+            <soap12:address location="http://localhost:8080/axis2/services/JavaBeansHandbookService"/>
+        </wsdl:port>
+        <wsdl:port name="JavaBeansHandbookServiceHttpEndpoint" binding="tns:JavaBeansHandbookServiceHttpBinding">
+            <http:address location="http://localhost:8080/axis2/services/JavaBeansHandbookService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
