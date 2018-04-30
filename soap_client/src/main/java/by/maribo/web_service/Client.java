@@ -4,6 +4,9 @@ import by.maribo.web_service.entity.Entity;
 import by.maribo.web_service.entity.Method;
 import org.apache.axis2.AxisFault;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,8 +155,21 @@ public class Client implements IJavaBeansHandbookService{
 		for (JavaBeansHandbookServiceStub.Method methodFromStub : methods) {
 			Method method = new Method();
 			method.setId(methodFromStub.getId());
-			method.setName(methodFromStub.getName());
-			method.setDescription(methodFromStub.getDescription());
+
+			String stubName = methodFromStub.getName();
+			String description = methodFromStub.getDescription();
+			String necessity = methodFromStub.getNecessity();
+			try {
+				byte text[] = stubName.getBytes("cp1251");
+				method.setName(new String(text, "UTF-8"));
+				byte ptext[] = description.getBytes("cp1251");
+				method.setDescription(new String(ptext, "UTF-8"));
+				byte ntext[] = necessity.getBytes("cp1251");
+				method.setNecessity(new String(ntext, "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
 			methodList.add(method);
 		}
 		return methodList;
@@ -164,8 +180,18 @@ public class Client implements IJavaBeansHandbookService{
 		for (JavaBeansHandbookServiceStub.Entity entityFromStub : entities) {
 			Entity entity = new Entity();
 			entity.setId(entityFromStub.getId());
-			entity.setName(entityFromStub.getName());
-			entity.setDescription(entityFromStub.getDescription());
+
+			String stubName = entityFromStub.getName();
+			String description = entityFromStub.getDescription();
+			try {
+				byte text[] = stubName.getBytes("cp1251");
+				entity.setName(new String(text, "UTF-8"));
+				byte ptext[] = description.getBytes("cp1251");
+				entity.setDescription(new String(ptext, "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
 			entityList.add(entity);
 		}
 		return entityList;
