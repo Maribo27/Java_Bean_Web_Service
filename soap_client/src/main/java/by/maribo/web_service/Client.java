@@ -29,7 +29,7 @@ public class Client implements IJavaBeansHandbookService{
 			JavaBeansHandbookServiceStub.Method[] methods = response.get_return();
 			return createMethods(methods);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot get all methods");
+			throw new ClientConnectionException("Cannot get all methods: " + e.getMessage());
 		}
 	}
 
@@ -44,7 +44,7 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.addMethod(addMethod);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot add method");
+			throw new ClientConnectionException("Cannot add method: " + e.getMessage());
 		}
 	}
 
@@ -59,7 +59,7 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.deleteMethod(deleteMethod);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot delete method");
+			throw new ClientConnectionException("Cannot delete method: " + e.getMessage());
 		}
 	}
 
@@ -74,7 +74,7 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.modifyMethod(modifyMethod);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot modify method");
+			throw new ClientConnectionException("Cannot modify method: " + e.getMessage());
 		}
 	}
 
@@ -103,7 +103,7 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.addEntity(addEntity);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot add entity");
+			throw new ClientConnectionException("Cannot add entity: " + e.getMessage());
 		}
 	}
 
@@ -119,7 +119,7 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.deleteEntity(deleteEntity);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot delete entity");
+			throw new ClientConnectionException("Cannot delete entity: " + e.getMessage());
 		}
 	}
 
@@ -136,7 +136,7 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.modifyEntity(modifyEntity);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot modify entity");
+			throw new ClientConnectionException("Cannot modify entity: " + e.getMessage());
 		}
 	}
 
