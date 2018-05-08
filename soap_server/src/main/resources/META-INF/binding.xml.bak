@@ -1,0 +1,7 @@
+<binding>
+    <mapping type-name="entity" class="by.maribo.web_service.entity.Entity">
+        <value style="element" name="id" field="id"/>
+        <value style="element" name="name" field="name"/>
+        <value style="element" name="description" field="description"/>
+    </mapping>
+</binding>

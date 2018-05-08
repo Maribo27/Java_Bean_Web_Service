@@ -1,8 +1,8 @@
 <project name="ForAnt" basedir="." default="generate.service">
     <property environment="env"/>
     <property name="build.dir" value="build"/>
-    <property name="wsdl.name" value="JavaBeansHandbookService.wsdl"/>
-    <property name="schema.dir" value="${basedir}\src\main\resources\META-INF"/>
+    <property name="wsdl.name" value="IBookService.wsdl"/>
+    <property name="schema.dir" value="${basedir}\src\main\resources"/>
     <property name="wsdl.uri" value="${schema.dir}\${wsdl.name}"/>
 
     <path id="axis2.classpath">
@@ -31,10 +31,8 @@
         <taskdef name="java2wsdl"
                  classname="org.apache.axis2.tool.ant.Java2WSDLTask"
                  classpathref="axis2.classpath"/>
-        <java2wsdl className="by.maribo.web_service.JavaBeansHandbookService"
-                   outputLocation="${build.dir}"
-                   targetNamespace="http://maribo.by/web_service/JavaBeansHandbookService"
-                   schemaTargetNamespace="http://maribo.by/web_service/JavaBeansHandbookService/xsd">
+        <java2wsdl className="service.IBookService"
+                   outputLocation="${build.dir}">
             <classpath>
                 <pathelement path="axis2.classpath"/>
                 <pathelement location="${build.dir}/classes"/>
@@ -58,23 +56,27 @@
 
     <target name="generate.client">
         <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <jvmarg line="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009"/>
             <classpath>
                 <path refid="axis2.classpath"/>
                 <path refid="jibx-classpath"/>
             </classpath>
-            <arg line="-p by.maribo.web_service"/>
+            <arg line="-p service"/>
             <arg line="-uri ${wsdl.uri}"/>
+            <arg line="-s"/>
+            <arg line="-l java"/>
+            <arg line="-uw"/>
+            <!--
+
             <arg value="-Ebindingfile"/>
             <arg value="${basedir}/src/main/resources/META-INF/binding.xml"/>
-            <arg line="-s"/>
-            <arg line="-uw"/>
-            <arg line="-l java"/>
+            -->
             <arg line="-d jibx"/>
             <arg line="-o ${build.dir}"/>
         </java>
-        <copy todir="${build.dir}/src/main/java/by/maribo/web_service/entity">
+        <!--<copy todir="${build.dir}/src/main/java/by/maribo/web_service/entity">
             <fileset dir="${basedir}/src/main/java/by/maribo/web_service/entity" includes="*.java"/>
-        </copy>
+        </copy>-->
     </target>
 
     <target name="clean">
