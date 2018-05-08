@@ -1,10 +1,13 @@
 package by.maribo.web_service.repository.impl;
 
 import by.maribo.web_service.entity.Entity;
+import by.maribo.web_service.repository.EntityNotExistInRepository;
 import by.maribo.web_service.repository.EntityRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static by.maribo.web_service.repository.Message.IS_NOT_EXIST_IN_REPOSITORY;
 
 public class Property implements EntityRepository {
 	private static final Property instance = new Property();
@@ -41,18 +44,23 @@ public class Property implements EntityRepository {
 	}
 
 	@Override
-	public void delete(Entity entity) {
+	public void delete(Entity entity) throws EntityNotExistInRepository {
+		if (!repository.contains(entity)) {
+			throw new EntityNotExistInRepository(entity.toString() + " " + IS_NOT_EXIST_IN_REPOSITORY);
+		}
 		repository.remove(entity);
 	}
 
 	@Override
-	public void modify(int id, Entity entity) {
+	public void modify(int id, Entity entity) throws EntityNotExistInRepository {
 		for (Entity currentEntity : repository) {
 			if (currentEntity.getId() == id) {
 				currentEntity.setName(entity.getName());
 				currentEntity.setDescription(entity.getDescription());
+				return;
 			}
 		}
+		throw new EntityNotExistInRepository(entity.toString() + " " + IS_NOT_EXIST_IN_REPOSITORY);
 	}
 
 	@Override

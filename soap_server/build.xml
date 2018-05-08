@@ -1,8 +1,17 @@
 <project name="ForAnt" basedir="." default="generate.service">
     <property environment="env"/>
     <property name="build.dir" value="build"/>
+    <property name="wsdl.name" value="JavaBeansHandbookService.wsdl"/>
+    <property name="schema.dir" value="${basedir}\src\main\resources\META-INF"/>
+    <property name="wsdl.uri" value="${schema.dir}\${wsdl.name}"/>
+
     <path id="axis2.classpath">
         <fileset dir="lib/axis2-1.7.7/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+    <path id="jibx-classpath">
+        <fileset dir="lib/jibx/lib">
             <include name="*.jar"/>
         </fileset>
     </path>
@@ -17,6 +26,7 @@
                classpathref="axis2.classpath">
         </javac>
     </target>
+
     <target name="generate.wsdl" depends="compile.service">
         <taskdef name="java2wsdl"
                  classname="org.apache.axis2.tool.ant.Java2WSDLTask"
@@ -31,11 +41,14 @@
             </classpath>
         </java2wsdl>
     </target>
+
     <target name="generate.service" depends="compile.service">
         <copy toDir="${build.dir}/classes" failonerror="false">
             <fileset dir="${basedir}/src/main/resources">
                 <include name="**/*.xml"/>
                 <include name="**/*.jar"/>
+                <include name="**/*.wsdl"/>
+                <include name="**/*.xsd"/>
             </fileset>
         </copy>
         <jar destfile="${build.dir}/JavaBeansHandbookService.aar">
@@ -44,14 +57,24 @@
     </target>
 
     <target name="generate.client">
-        <taskdef name="wsdl2java"
-                 classname="org.apache.axis2.tool.ant.AntCodegenTask"
-                 classpathref="axis2.classpath"/>
-
-        <wsdl2java
-                packagename="by.maribo.web_service"
-                wsdlfilename="${build.dir}/JavaBeansHandbookService.wsdl"
-                output="${build.dir}/resources"/>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <classpath>
+                <path refid="axis2.classpath"/>
+                <path refid="jibx-classpath"/>
+            </classpath>
+            <arg line="-p by.maribo.web_service"/>
+            <arg line="-uri ${wsdl.uri}"/>
+            <arg value="-Ebindingfile"/>
+            <arg value="${basedir}/src/main/resources/META-INF/binding.xml"/>
+            <arg line="-s"/>
+            <arg line="-uw"/>
+            <arg line="-l java"/>
+            <arg line="-d jibx"/>
+            <arg line="-o ${build.dir}"/>
+        </java>
+        <copy todir="${build.dir}/src/main/java/by/maribo/web_service/entity">
+            <fileset dir="${basedir}/src/main/java/by/maribo/web_service/entity" includes="*.java"/>
+        </copy>
     </target>
 
     <target name="clean">

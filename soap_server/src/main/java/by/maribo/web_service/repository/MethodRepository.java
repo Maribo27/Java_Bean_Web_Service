@@ -5,6 +5,9 @@ import by.maribo.web_service.entity.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.maribo.web_service.repository.Message.EXIST_IN_REPOSITORY;
+import static by.maribo.web_service.repository.Message.IS_NOT_EXIST_IN_REPOSITORY;
+
 public class MethodRepository {
 	private static final MethodRepository instance = new MethodRepository();
 	private List<Method> repository;
@@ -67,23 +70,31 @@ public class MethodRepository {
 		repository.add(method);
 	}
 
-	public void add(Method method) {
+	public void add(Method method) throws CurrentEntityExistInRepository {
+		if (repository.contains(method)) {
+			throw new CurrentEntityExistInRepository(method.toString() + " " + EXIST_IN_REPOSITORY);
+		}
 		method.setId(id++);
 		repository.add(method);
 	}
 
-	public void delete(Method method) {
+	public void delete(Method method) throws EntityNotExistInRepository {
+		if (!repository.contains(method)) {
+			throw new EntityNotExistInRepository(method.toString() + " " + IS_NOT_EXIST_IN_REPOSITORY);
+		}
 		repository.remove(method);
 	}
 
-	public void modify(int id, Method method) {
+	public void modify(int id, Method method) throws EntityNotExistInRepository {
 		for (Method currentMethod : repository) {
 			if (currentMethod.getId() == id) {
 				currentMethod.setName(method.getName());
 				currentMethod.setDescription(method.getDescription());
 				currentMethod.setNecessity(method.getNecessity());
+				return;
 			}
 		}
+		throw new EntityNotExistInRepository(method.toString() + " " + IS_NOT_EXIST_IN_REPOSITORY);
 	}
 
 	public List<Method> getRepository() {

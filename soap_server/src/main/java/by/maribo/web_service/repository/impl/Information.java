@@ -1,7 +1,10 @@
 package by.maribo.web_service.repository.impl;
 
 import by.maribo.web_service.entity.Entity;
+import by.maribo.web_service.repository.CurrentEntityExistInRepository;
+import by.maribo.web_service.repository.EntityNotExistInRepository;
 import by.maribo.web_service.repository.EntityRepository;
+import by.maribo.web_service.repository.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,7 @@ public class Information implements EntityRepository {
 
 		entity = new Entity(id++, "Общие обязанности",
 				"\t* Обработка транзакции\n"
-						+ "\t* Интеграция с услугами сохранения, предлагаемыми API Java Persistence (JPA)\n"
+						+ "\t* Iнтеграция с услугами сохранения, предлагаемыми API Java Persistence (JPA)\n"
 						+ "\t* Контроль параллелизма\n"
 						+ "\t* Управляемое событиями программирование с использованием службы сообщений Java и архитектуры Java EE Connector\n"
 						+ "\t* Асинхронный вызов метода\n"
@@ -40,24 +43,32 @@ public class Information implements EntityRepository {
 	}
 
 	@Override
-	public void add(Entity entity) {
+	public void add(Entity entity) throws CurrentEntityExistInRepository {
+		if (repository.contains(entity)) {
+			throw new CurrentEntityExistInRepository(entity.toString() + " " + Message.EXIST_IN_REPOSITORY);
+		}
 		entity.setId(id++);
 		repository.add(entity);
 	}
 
 	@Override
-	public void delete(Entity entity) {
+	public void delete(Entity entity) throws EntityNotExistInRepository {
+		if (!repository.contains(entity)) {
+			throw new EntityNotExistInRepository(entity.toString() + " " + Message.IS_NOT_EXIST_IN_REPOSITORY);
+		}
 		repository.remove(entity);
 	}
 
 	@Override
-	public void modify(int id, Entity entity) {
+	public void modify(int id, Entity entity) throws EntityNotExistInRepository {
 		for (Entity currentEntity : repository) {
 			if (currentEntity.getId() == id) {
 				currentEntity.setName(entity.getName());
 				currentEntity.setDescription(entity.getDescription());
+				return;
 			}
 		}
+		throw new EntityNotExistInRepository(entity.toString() + " " + Message.IS_NOT_EXIST_IN_REPOSITORY);
 	}
 
 	@Override

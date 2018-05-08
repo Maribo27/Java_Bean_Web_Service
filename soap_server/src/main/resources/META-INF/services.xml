@@ -2,10 +2,13 @@
     <description>
         Service for Java Beans Handbook
     </description>
+    <schema elementFormDefaultQualified="true"
+            schemaNamespace="http://maribo.by/web_service/JavaBeansHandbookService/xsd"/>
     <messageReceivers>
-        <messageReceiver mep="http://www.w3.org/ns/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
-        <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        <messageReceiver mep="http://www.w3.org/ns/wsdl/in-only"
+                         class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+        <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out"
+                         class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
     </messageReceivers>
-    <schema schemaNamespace="http://maribo.by/web_service/JavaBeansHandbookService/xsd"/>
     <parameter name="ServiceClass">by.maribo.web_service.JavaBeansHandbookService</parameter>
 </service>

@@ -20,9 +20,53 @@
             <artifactId>ant</artifactId>
             <version>1.8.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-jibx</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-java2wsdl-maven-plugin</artifactId>
+            <version>1.7.7</version>
+        </dependency>
     </dependencies>
+
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
+                <version>1.7.7</version>
+                <configuration>
+                    <databindingName>jibx</databindingName>
+                    <jibxBindingFile>D:\Projects\Java\WebService\soap_server\src\main\resources\META-INF\binding.xml</jibxBindingFile>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jibx</groupId>
+                        <artifactId>jibx-run</artifactId>
+                        <version>1.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jibx</groupId>
+                        <artifactId>jibx-bind</artifactId>
+                        <version>1.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jibx</groupId>
+                        <artifactId>jibx-maven-plugin</artifactId>
+                        <version>1.3.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.axis2</groupId>
+                        <artifactId>axis2-codegen</artifactId>
+                        <version>1.7.7</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
