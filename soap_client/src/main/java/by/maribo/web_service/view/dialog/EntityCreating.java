@@ -6,12 +6,8 @@ import by.maribo.web_service.view.styled_component.DarkButton;
 import by.maribo.web_service.view.styled_component.DarkPanel;
 import by.maribo.web_service.view.styled_component.Text;
 import by.maribo.web_service.view.styled_component.TitledScrollPane;
-import com.sun.java.swing.plaf.windows.WindowsScrollBarUI;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.basic.BasicScrollBarUI;
-import javax.swing.plaf.multi.MultiScrollBarUI;
 import java.awt.*;
 
 import static by.maribo.web_service.view.dialog.Sizer.PANEL_WIDTH;
