@@ -8,8 +8,6 @@ import by.maribo.web_service.view.styled_component.Text;
 import by.maribo.web_service.view.styled_component.TitledScrollPane;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 
 import static by.maribo.web_service.view.dialog.Sizer.PANEL_WIDTH;

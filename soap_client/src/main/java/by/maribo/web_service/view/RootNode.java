@@ -44,12 +44,11 @@ class RootNode {
 		createParentLeaves(javaBeanNode, "Свойства", "property");
 		createParentLeaves(javaBeanNode, "Общее", "rule");
 
-
 		EntityLeaf enterpriseJavaBean = new EntityLeaf(entities.get(1), true, "type");
 		allEntities.add(enterpriseJavaBean);
 		DefaultMutableTreeNode enterpriseJavaBeanNode = enterpriseJavaBean.getNode();
 		root.add(enterpriseJavaBeanNode);
-		createParentLeaves(enterpriseJavaBeanNode, "Общее", "ejb_info");
+		createParentLeaves(enterpriseJavaBeanNode, "Информация", "ejb_info");
 		createParentLeaves(enterpriseJavaBeanNode, "Типы", "ejb_type");
 		createParentLeaves(enterpriseJavaBeanNode, "Роли", "role");
 	}

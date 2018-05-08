@@ -5,7 +5,6 @@ import by.maribo.web_service.entity.Method;
 import by.maribo.web_service.view.styled_component.*;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.Objects;
 

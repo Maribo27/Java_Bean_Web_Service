@@ -3,13 +3,17 @@ package by.maribo.web_service;
 import by.maribo.web_service.entity.Entity;
 import by.maribo.web_service.entity.Method;
 import org.apache.axis2.AxisFault;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Client implements IJavaBeansHandbookService{
 	private final static String END_POINT = "http://localhost:8080/axis2/services/JavaBeansHandbookService?wsdl";
+	private final static Logger logger = LoggerFactory.getLogger(Client.class);
 
 	private JavaBeansHandbookServiceStub serviceStub;
 
@@ -25,13 +29,14 @@ public class Client implements IJavaBeansHandbookService{
 			JavaBeansHandbookServiceStub.Method[] methods = response.get_return();
 			return createMethods(methods);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot get all methods");
+			throw new ClientConnectionException("Cannot get all methods: " + e.getMessage());
 		}
 	}
 
 	@Override
 	public void addMethod(Method method) {
 		try {
+			method = encodeMethod(method);
 			JavaBeansHandbookServiceStub.Method methodFromStub = createMethod(method);
 
 			JavaBeansHandbookServiceStub.AddMethod addMethod = new JavaBeansHandbookServiceStub.AddMethod();
@@ -39,13 +44,14 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.addMethod(addMethod);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot add method");
+			throw new ClientConnectionException("Cannot add method: " + e.getMessage());
 		}
 	}
 
 	@Override
 	public void deleteMethod(Method method) {
 		try {
+			method = encodeMethod(method);
 			JavaBeansHandbookServiceStub.Method methodFromStub = createMethod(method);
 
 			JavaBeansHandbookServiceStub.DeleteMethod deleteMethod = new JavaBeansHandbookServiceStub.DeleteMethod();
@@ -53,13 +59,14 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.deleteMethod(deleteMethod);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot delete method");
+			throw new ClientConnectionException("Cannot delete method: " + e.getMessage());
 		}
 	}
 
 	@Override
 	public void modifyMethod(int id, Method method) {
 		try {
+			method = encodeMethod(method);
 			JavaBeansHandbookServiceStub.Method methodFromStub = createMethod(method);
 
 			JavaBeansHandbookServiceStub.ModifyMethod modifyMethod = new JavaBeansHandbookServiceStub.ModifyMethod();
@@ -67,7 +74,7 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.modifyMethod(modifyMethod);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot modify method");
+			throw new ClientConnectionException("Cannot modify method: " + e.getMessage());
 		}
 	}
 
@@ -87,6 +94,7 @@ public class Client implements IJavaBeansHandbookService{
 	@Override
 	public void addEntity(Entity entity, String entityType) {
 		try {
+			entity = encodeEntity(entity);
 			JavaBeansHandbookServiceStub.Entity entityFromStub = createEntity(entity);
 
 			JavaBeansHandbookServiceStub.AddEntity addEntity = new JavaBeansHandbookServiceStub.AddEntity();
@@ -95,13 +103,14 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.addEntity(addEntity);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot add entity");
+			throw new ClientConnectionException("Cannot add entity: " + e.getMessage());
 		}
 	}
 
 	@Override
 	public void deleteEntity(Entity entity, String entityType) {
 		try {
+			entity = encodeEntity(entity);
 			JavaBeansHandbookServiceStub.Entity entityFromStub = createEntity(entity);
 
 			JavaBeansHandbookServiceStub.DeleteEntity deleteEntity = new JavaBeansHandbookServiceStub.DeleteEntity();
@@ -110,13 +119,14 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.deleteEntity(deleteEntity);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot delete entity");
+			throw new ClientConnectionException("Cannot delete entity: " + e.getMessage());
 		}
 	}
 
 	@Override
 	public void modifyEntity(int id, Entity entity, String entityType) {
 		try {
+			entity = encodeEntity(entity);
 			JavaBeansHandbookServiceStub.Entity entityFromStub = createEntity(entity);
 
 			JavaBeansHandbookServiceStub.ModifyEntity modifyEntity = new JavaBeansHandbookServiceStub.ModifyEntity();
@@ -126,7 +136,7 @@ public class Client implements IJavaBeansHandbookService{
 
 			serviceStub.modifyEntity(modifyEntity);
 		} catch (RemoteException e) {
-			throw new ClientConnectionException("Cannot modify entity");
+			throw new ClientConnectionException("Cannot modify entity: " + e.getMessage());
 		}
 	}
 
@@ -152,8 +162,14 @@ public class Client implements IJavaBeansHandbookService{
 		for (JavaBeansHandbookServiceStub.Method methodFromStub : methods) {
 			Method method = new Method();
 			method.setId(methodFromStub.getId());
-			method.setName(methodFromStub.getName());
-			method.setDescription(methodFromStub.getDescription());
+
+			String stubName = methodFromStub.getName();
+			method.setName(encodeFromCp1251ToUtf8(stubName));
+			String description = methodFromStub.getDescription();
+			method.setDescription(encodeFromCp1251ToUtf8(description));
+			String necessity = methodFromStub.getNecessity();
+			method.setNecessity(encodeFromCp1251ToUtf8(necessity));
+
 			methodList.add(method);
 		}
 		return methodList;
@@ -164,10 +180,51 @@ public class Client implements IJavaBeansHandbookService{
 		for (JavaBeansHandbookServiceStub.Entity entityFromStub : entities) {
 			Entity entity = new Entity();
 			entity.setId(entityFromStub.getId());
-			entity.setName(entityFromStub.getName());
-			entity.setDescription(entityFromStub.getDescription());
+
+			String stubName = entityFromStub.getName();
+			entity.setName(encodeFromCp1251ToUtf8(stubName));
+			String description = entityFromStub.getDescription();
+			entity.setDescription(encodeFromCp1251ToUtf8(description));
+
 			entityList.add(entity);
 		}
 		return entityList;
+	}
+
+	private Method encodeMethod(Method method) {
+		String name = encodeFromUtf8ToCp1251(method.getName());
+		method.setName(name);
+		String description = encodeFromUtf8ToCp1251(method.getDescription());
+		method.setDescription(description);
+		String necessity = encodeFromUtf8ToCp1251(method.getNecessity());
+		method.setNecessity(necessity);
+		return method;
+	}
+
+	private Entity encodeEntity(Entity entity) {
+		String name = encodeFromUtf8ToCp1251(entity.getName());
+		entity.setName(name);
+		String description = encodeFromUtf8ToCp1251(entity.getDescription());
+		entity.setDescription(description);
+		return entity;
+	}
+	private String encodeFromCp1251ToUtf8(String stringToEncode) {
+		try {
+			byte text[] = stringToEncode.getBytes("cp1251");
+			return new String(text, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.info("Cannot encode string - %s - from cp-1251 to utf-8", stringToEncode);
+			return stringToEncode;
+		}
+	}
+
+	private String encodeFromUtf8ToCp1251(String stringToEncode) {
+		try {
+			byte text[] = stringToEncode.getBytes("UTF-8");
+			return new String(text, "cp1251");
+		} catch (UnsupportedEncodingException e) {
+			logger.info("Cannot encode string - %s - from utf-8 to cp-1251", stringToEncode);
+			return stringToEncode;
+		}
 	}
 }
