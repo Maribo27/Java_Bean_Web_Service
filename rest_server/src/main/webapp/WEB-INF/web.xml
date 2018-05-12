@@ -1,4 +1,5 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+    <display-name>by.maribo.web_service</display-name>
     <servlet>
         <servlet-name>RESTful</servlet-name>
         <servlet-class>
@@ -13,7 +14,7 @@
 
     <servlet-mapping>
         <servlet-name>RESTful</servlet-name>
-        <url-pattern>/web-services-rest-server-1.0/*</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

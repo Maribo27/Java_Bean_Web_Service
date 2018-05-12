@@ -35,6 +35,7 @@ public class EntityDAO {
 				entity.setId(resultSet.getInt(column++));
 				entity.setName(resultSet.getString(column++));
 				entity.setDescription(resultSet.getString(column));
+				entity.setType(entityType);
 				entities.add(entity);
 			}
 
@@ -52,12 +53,12 @@ public class EntityDAO {
 		}
 	}
 
-	public void addEntity(Entity entity, String entityType) {
+	public void addEntity(Entity entity) {
 		Connection connection = null;
 
 		try {
 			connection = Connector.getConnection();
-			String query = String.format(ADD_ENTITY_QUERY, entityType);
+			String query = String.format(ADD_ENTITY_QUERY, entity.getType());
 			PreparedStatement statement = connection.prepareStatement(query);
 
 			statement.setString(1, entity.getName());
@@ -77,15 +78,15 @@ public class EntityDAO {
 		}
 	}
 
-	public void deleteEntity(Entity entity, String entityType) {
+	public void deleteEntity(String type, int id) {
 		Connection connection = null;
 
 		try {
 			connection = Connector.getConnection();
-			String query = String.format(DELETE_ENTITY_QUERY, entityType);
+			String query = String.format(DELETE_ENTITY_QUERY, type);
 			PreparedStatement statement = connection.prepareStatement(query);
 
-			statement.setInt(1, entity.getId());
+			statement.setInt(1, id);
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -101,12 +102,12 @@ public class EntityDAO {
 		}
 	}
 
-	public void modifyEntity(Entity entity, String entityType) {
+	public void modifyEntity(Entity entity) {
 		Connection connection = null;
 
 		try {
 			connection = Connector.getConnection();
-			String query = String.format(UPDATE_ENTITY_QUERY, entityType);
+			String query = String.format(UPDATE_ENTITY_QUERY, entity.getType());
 			PreparedStatement statement = connection.prepareStatement(query);
 
 			statement.setString(1, entity.getName());

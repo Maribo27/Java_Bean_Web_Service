@@ -77,14 +77,14 @@ public class MethodDAO {
 		}
 	}
 
-	public void deleteMethod(Method method) {
+	public void deleteMethod(int id) {
 		Connection connection = null;
 
 		try {
 			connection = Connector.getConnection();
 			PreparedStatement statement = connection.prepareStatement(DELETE_METHOD_QUERY);
 
-			statement.setInt(1, method.getId());
+			statement.setInt(1, id);
 
 			statement.executeUpdate();
 		} catch (SQLException e) {

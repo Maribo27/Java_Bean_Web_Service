@@ -4,6 +4,7 @@ import by.maribo.web_service.dao.DAOException;
 import by.maribo.web_service.dao.DAOFactory;
 import by.maribo.web_service.dao.MethodDAO;
 import by.maribo.web_service.entity.Method;
+import by.maribo.web_service.entity.MethodList;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,7 +22,7 @@ public class MethodService {
 			List<Method> methods = dao.getAllMethods();
 			return Response
 					.status(Response.Status.ACCEPTED)
-					.entity(methods)
+					.entity(new MethodList(methods))
 					.build();
 		} catch (DAOException e) {
 			return Response
@@ -49,13 +50,13 @@ public class MethodService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("/{id}/delete")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteMethod(Method method) {
+	public Response deleteMethod(@PathParam("id") String id) {
 		MethodDAO dao = DAOFactory.getInstance().getMethodDAO();
 		try {
-			dao.deleteMethod(method);
+			dao.deleteMethod(Integer.parseInt(id));
 			return Response.status(Response.Status.ACCEPTED).build();
 		} catch (DAOException e) {
 			return Response
@@ -66,7 +67,7 @@ public class MethodService {
 	}
 
 	@PUT
-	@Path("/{id}")
+	@Path("/modify")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
 	public Response modifyMethod(Method method) {

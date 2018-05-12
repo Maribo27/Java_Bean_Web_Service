@@ -16,6 +16,8 @@ public class Entity implements Serializable {
 	private String name;
 	@XmlElement
 	private String description;
+	@XmlElement
+	private String type;
 
 	public Entity() {
 	}
@@ -50,6 +52,14 @@ public class Entity implements Serializable {
 		this.description = description;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -57,18 +67,20 @@ public class Entity implements Serializable {
 		Entity entity = (Entity) o;
 		return id == entity.id &&
 				Objects.equals(name, entity.name) &&
+				Objects.equals(type, entity.type) &&
 				Objects.equals(description, entity.description);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, description);
+		return Objects.hash(id, name, description, type);
 	}
 
 	@Override
 	public String toString() {
 		return "Entity{" +
 				"id=" + id +
+				", type='" + type + '\'' +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
 				'}';

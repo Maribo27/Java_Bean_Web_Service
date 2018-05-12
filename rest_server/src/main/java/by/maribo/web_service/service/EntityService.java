@@ -4,6 +4,7 @@ import by.maribo.web_service.dao.DAOException;
 import by.maribo.web_service.dao.DAOFactory;
 import by.maribo.web_service.dao.EntityDAO;
 import by.maribo.web_service.entity.Entity;
+import by.maribo.web_service.entity.EntityList;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,15 +14,15 @@ import java.util.List;
 @Path("/entity")
 public class EntityService {
 	@GET
-	@Path("/list")
+	@Path("/{entityType}/list")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response getAllEntities(String entityType) {
+	public Response getAllEntities(@PathParam("entityType") String entityType) {
 		EntityDAO dao = DAOFactory.getInstance().getEntityDAO();
 		try {
 			List<Entity> entities = dao.getAllEntities(entityType);
 			return Response
 					.status(Response.Status.ACCEPTED)
-					.entity(entities)
+					.entity(new EntityList(entities))
 					.build();
 		} catch (DAOException e) {
 			return Response
@@ -35,10 +36,10 @@ public class EntityService {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response addEntity(Entity entity, String entityType) {
+	public Response addEntity(Entity entity) {
 		EntityDAO dao = DAOFactory.getInstance().getEntityDAO();
 		try {
-			dao.addEntity(entity, entityType);
+			dao.addEntity(entity);
 			return Response.status(Response.Status.ACCEPTED).build();
 		} catch (DAOException e) {
 			return Response
@@ -49,13 +50,13 @@ public class EntityService {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("/{type}/{id}/delete")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteEntity(Entity entity, String entityType) {
+	public Response deleteEntity(@PathParam("type") String type, @PathParam("id") String id) {
 		EntityDAO dao = DAOFactory.getInstance().getEntityDAO();
 		try {
-			dao.deleteEntity(entity, entityType);
+			dao.deleteEntity(type, Integer.parseInt(id));
 			return Response.status(Response.Status.ACCEPTED).build();
 		} catch (DAOException e) {
 			return Response
@@ -66,13 +67,13 @@ public class EntityService {
 	}
 
 	@PUT
-	@Path("/{id}")
+	@Path("/modify")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response modifyEntity(Entity entity, String entityType) {
+	public Response modifyEntity(Entity entity) {
 		EntityDAO dao = DAOFactory.getInstance().getEntityDAO();
 		try {
-			dao.modifyEntity(entity, entityType);
+			dao.modifyEntity(entity);
 			return Response.status(Response.Status.ACCEPTED).build();
 		} catch (DAOException e) {
 			return Response
