@@ -16,13 +16,13 @@ class Tree {
 		tree.setCellRenderer(new TreeCellRenderer());
 		tree.setRootVisible(false);
 		tree.setRowHeight(24);
-		}
+	}
 
-	int[] returnSelection(){
+	int[] returnSelection() {
 		return tree.getSelectionRows();
 	}
 
-	Vector<Integer> returnExpands(){
+	Vector<Integer> returnExpands() {
 		Vector<Integer> expandedRows = new Vector<>();
 		for (int iterator = 0; iterator < tree.getRowCount(); iterator++)
 			if (tree.isExpanded(iterator)) expandedRows.add(iterator);

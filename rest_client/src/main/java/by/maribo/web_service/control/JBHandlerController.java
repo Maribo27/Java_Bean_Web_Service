@@ -8,7 +8,6 @@ import by.maribo.web_service.view.TreeNodeLevel;
 import by.maribo.web_service.view.Window;
 import by.maribo.web_service.view.leaf.EntityLeaf;
 import by.maribo.web_service.view.leaf.MethodLeaf;
-import org.apache.axis2.AxisFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +29,7 @@ public class JBHandlerController {
 		try {
 			client = new Client();
 			window = new Window(this);
-		} catch (AxisFault | ClientConnectionException e) {
+		} catch (ClientConnectionException e) {
 			logger.error(e.getMessage());
 			System.exit(0);
 		}
@@ -62,36 +61,36 @@ public class JBHandlerController {
 	    update();
     }
 
-    public void modifyMethod(int id, Method method){
+    public void modifyMethod(Method method){
 	    try {
-		    client.modifyMethod(id, method);
+		    client.modifyMethod(method);
 	    } catch (Exception e) {
 		    logger.error(e.getMessage());
 	    }
 	    update();
     }
 
-    public void addEntity(Entity entity, String entityType){
+    public void addEntity(Entity entity){
 	    try {
-		    client.addEntity(entity, entityType);
+		    client.addEntity(entity);
 	    } catch (Exception e) {
 		    logger.error(e.getMessage());
 	    }
 	    update();
     }
 
-    public void deleteEntity(Entity entity, String entityType){
+    public void deleteEntity(Entity entity){
 	    try {
-		    client.deleteEntity(entity, entityType);
+		    client.deleteEntity(entity);
 	    } catch (Exception e) {
 		    logger.error(e.getMessage());
 	    }
 	    update();
     }
 
-    public void modifyEntity(int id, Entity entity, String entityType){
+    public void modifyEntity(Entity entity){
 	    try {
-		    client.modifyEntity(id, entity, entityType);
+		    client.modifyEntity(entity);
 	    } catch (Exception e) {
 		    logger.error(e.getMessage());
 	    }

@@ -7,10 +7,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class EntityLeaf {
     private DefaultMutableTreeNode node;
     private Entity entity;
-    private String table;
 
-    public EntityLeaf(Entity entity, boolean allowsChildren, String table) {
-        this.table = table;
+    public EntityLeaf(Entity entity, boolean allowsChildren) {
         this.entity = entity;
         node = new DefaultMutableTreeNode(entity.getName(), allowsChildren);
     }
@@ -32,6 +30,6 @@ public class EntityLeaf {
     }
 
     public String getTable() {
-        return table;
+        return entity.getType();
     }
 }

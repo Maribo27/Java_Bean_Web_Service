@@ -46,7 +46,7 @@ class WorkPanel {
             EntityLeaf entity = controller.getCurrentEntity();
             MethodLeaf method = controller.getCurrentMethod();
             if (!table.equalsIgnoreCase("method")) {
-                new EntityChanging(controller, entity.getTable(), entity.getEntity());
+                new EntityChanging(controller, entity.getEntity());
             } else {
                 new MethodChanging(controller, method.getMethod());
             }
@@ -59,7 +59,7 @@ class WorkPanel {
             EntityLeaf entity = controller.getCurrentEntity();
             MethodLeaf method = controller.getCurrentMethod();
             if (!table.equalsIgnoreCase("method")) {
-                controller.deleteEntity(entity.getEntity(), entity.getTable());
+                controller.deleteEntity(entity.getEntity());
             } else if (method != null) {
                 controller.deleteMethod(method.getMethod());
             }

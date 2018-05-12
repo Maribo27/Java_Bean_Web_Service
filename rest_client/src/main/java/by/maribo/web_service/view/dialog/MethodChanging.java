@@ -12,7 +12,6 @@ import static by.maribo.web_service.view.dialog.Sizer.PANEL_WIDTH;
 
 public class MethodChanging {
 
-	private static final int ROWS = 4;
 	private JDialog dialog;
 	private JTextArea name;
 	private JTextArea description;
@@ -43,7 +42,7 @@ public class MethodChanging {
 			method.setName(name.getText());
 			method.setDescription(description.getText());
 			method.setNecessity(Objects.requireNonNull(necessity.getSelectedItem()).toString());
-			controller.modifyMethod(method.getId(), method);
+			controller.modifyMethod(method);
 			dialog.dispose();
 		});
 		panel.add(decline);

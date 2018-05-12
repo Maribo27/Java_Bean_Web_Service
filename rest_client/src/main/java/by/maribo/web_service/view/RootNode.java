@@ -29,7 +29,7 @@ class RootNode {
 
 		List<Entity> entities = controller.getAllEntities("type");
 
-		EntityLeaf javaBean = new EntityLeaf(entities.get(0), true, "type");
+		EntityLeaf javaBean = new EntityLeaf(entities.get(0), true);
 		allEntities.add(javaBean);
 		DefaultMutableTreeNode javaBeanNode = javaBean.getNode();
 		root.add(javaBeanNode);
@@ -44,7 +44,7 @@ class RootNode {
 		createParentLeaves(javaBeanNode, "Свойства", "property");
 		createParentLeaves(javaBeanNode, "Общее", "rule");
 
-		EntityLeaf enterpriseJavaBean = new EntityLeaf(entities.get(1), true, "type");
+		EntityLeaf enterpriseJavaBean = new EntityLeaf(entities.get(1), true);
 		allEntities.add(enterpriseJavaBean);
 		DefaultMutableTreeNode enterpriseJavaBeanNode = enterpriseJavaBean.getNode();
 		root.add(enterpriseJavaBeanNode);
@@ -65,7 +65,7 @@ class RootNode {
 	private void createLeaves(DefaultMutableTreeNode rootNode, String type) {
 		List<Entity> entities = controller.getAllEntities(type);
 		for (Entity entity : entities) {
-			EntityLeaf leaf = new EntityLeaf(entity, false, type);
+			EntityLeaf leaf = new EntityLeaf(entity, false);
 			allEntities.add(leaf);
 			rootNode.add(leaf.getNode());
 		}

@@ -39,7 +39,8 @@ public class EntityCreating {
 			Entity entity = new Entity();
 			entity.setName(name.getText());
 			entity.setDescription(description.getText());
-			controller.addEntity(entity, type);
+			entity.setType(type);
+			controller.addEntity(entity);
 			dialog.dispose();
 		});
 		panel.add(decline);

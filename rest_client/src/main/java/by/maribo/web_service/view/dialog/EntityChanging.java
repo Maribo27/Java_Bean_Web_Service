@@ -19,7 +19,7 @@ public class EntityChanging {
 	private JTextArea name;
 	private JTextArea description;
 
-	public EntityChanging(JBHandlerController controller, String type, Entity entity) {
+	public EntityChanging(JBHandlerController controller, Entity entity) {
 		dialog = new JDialog(new JFrame(), "Изменить", true);
 		dialog.setResizable(false);
 		setSize(dialog);
@@ -41,7 +41,7 @@ public class EntityChanging {
 		accept.addActionListener(e -> {
 			entity.setName(name.getText());
 			entity.setDescription(description.getText());
-			controller.modifyEntity(entity.getId(), entity, type);
+			controller.modifyEntity(entity);
 			dialog.dispose();
 		});
 		panel.add(decline);

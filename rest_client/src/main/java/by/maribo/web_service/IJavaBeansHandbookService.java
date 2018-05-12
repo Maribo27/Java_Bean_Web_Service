@@ -9,9 +9,9 @@ public interface IJavaBeansHandbookService {
 	List<Method> getAllMethods();
 	void addMethod(Method method);
 	void deleteMethod(Method method);
-	void modifyMethod(int id, Method method);
+	void modifyMethod(Method method);
 	List<Entity> getAllEntities(String entityType);
-	void addEntity(Entity entity, String entityType);
-	void deleteEntity(Entity entity, String entityType);
-	void modifyEntity(int id, Entity entity, String entityType);
+	void addEntity(Entity entity);
+	void deleteEntity(Entity entity);
+	void modifyEntity(Entity entity);
 }
