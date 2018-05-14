@@ -1,7 +1,7 @@
 <project name="ForAnt" basedir="." default="generate.service">
     <property environment="env"/>
     <property name="build.dir" value="build"/>
-    <property name="wsdl.name" value="IBookService.wsdl"/>
+    <property name="wsdl.name" value="JavaBeansHandbookService.wsdl"/>
     <property name="schema.dir" value="${basedir}\src\main\resources"/>
     <property name="wsdl.uri" value="${schema.dir}\${wsdl.name}"/>
 
@@ -31,7 +31,7 @@
         <taskdef name="java2wsdl"
                  classname="org.apache.axis2.tool.ant.Java2WSDLTask"
                  classpathref="axis2.classpath"/>
-        <java2wsdl className="service.IBookService"
+        <java2wsdl className="by.maribo.web_service.JavaBeansHandbookService"
                    outputLocation="${build.dir}">
             <classpath>
                 <pathelement path="axis2.classpath"/>
@@ -56,7 +56,7 @@
 
     <target name="generate.client">
         <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
-            <jvmarg line="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009"/>
+            <!--<jvmarg line="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009"/>-->
             <classpath>
                 <path refid="axis2.classpath"/>
                 <path refid="jibx-classpath"/>
@@ -65,12 +65,8 @@
             <arg line="-uri ${wsdl.uri}"/>
             <arg line="-s"/>
             <arg line="-l java"/>
-            <arg line="-uw"/>
-            <!--
-
             <arg value="-Ebindingfile"/>
             <arg value="${basedir}/src/main/resources/META-INF/binding.xml"/>
-            -->
             <arg line="-d jibx"/>
             <arg line="-o ${build.dir}"/>
         </java>

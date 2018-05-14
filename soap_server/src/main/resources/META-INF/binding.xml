@@ -1,0 +1,14 @@
+<binding targetNamespace="http://entity.web_service.maribo.by/xsd">
+    <mapping type-name="Entity" class="by.maribo.web_service.entity.Entity">
+        <value style="element" name="id" field="id"/>
+        <value style="element" name="name" field="name"/>
+        <value style="element" name="description" field="description"/>
+    </mapping>
+
+    <mapping type-name="Entity" class="by.maribo.web_service.entity.Method">
+        <value style="element" name="id" field="id"/>
+        <value style="element" name="name" field="name"/>
+        <value style="element" name="description" field="description"/>
+        <value style="element" name="necessity" field="necessity"/>
+    </mapping>
+</binding>
