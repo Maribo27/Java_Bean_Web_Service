@@ -29,6 +29,7 @@ public class EntityInformation implements Command {
 	    try {
 	        Entity entity = service.getEntity(id, type);
 		    request.setAttribute(ENTITY, entity);
+		    request.setAttribute("method", null);
 		    RequestDispatcher requestDispatcher = request.getRequestDispatcher(INDEX);
 		    requestDispatcher.forward(request, response);
         } catch (ServiceException e) {

@@ -1,12 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/error.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/icon.ico">
+    <c:import url="/WEB-INF/jsp/style.jsp"/>
     <title>Java Beans Handbook | 404</title>
 </head>
 

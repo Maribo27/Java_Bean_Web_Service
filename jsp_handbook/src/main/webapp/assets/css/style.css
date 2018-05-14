@@ -3,16 +3,11 @@ body {
   font-family: 'Raleway', sans-serif;
   font-size:15px;
   line-height:1.5;
-  padding: 0;
   background-image: url(../images/bg.jpg);
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
 }
 
 html {
-  position:relative;
   min-height:100%;
 }
 
@@ -43,7 +38,7 @@ html {
 }
 
 .sidebar-menu h2 {
-  font-size: calc(15px + 0.8vw); 
+  font-size: calc(15px + 0.8vw);
 }
 
 a {
@@ -55,16 +50,6 @@ a {
   font-size: calc(12px + 0.5vw);
 }
 
-.information {
-  width: calc(90vw - 200px);
-  position: relative;
-  left: calc(5vw + 200px);
-  margin-top: 10px;
-  padding-left: 50px;
-  z-index: 1;
-  display: inline-block;
-}
-
 .selection-form {
   display: table;
   width: 100%;
@@ -72,15 +57,15 @@ a {
 }
 
 @media only screen and (orientation: portrait) {
-    .footer {
+  .footer {
     font-size: calc(7px + 0.3vw);
   }
-  
+
   .sidebar-menu h2{
     font-size: 1.1em;
   }
-  
+
   body {
-  background-image: url(../images/portrait.jpg);
-}
+    background-image: url(../images/portrait.jpg);
+  }
 }

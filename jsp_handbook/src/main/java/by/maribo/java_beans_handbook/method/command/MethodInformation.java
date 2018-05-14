@@ -28,6 +28,7 @@ public class MethodInformation implements Command {
 	    try {
 		    Method method = service.getMethod(id);
 		    request.setAttribute(METHOD, method);
+		    request.setAttribute("entity", null);
 		    RequestDispatcher requestDispatcher = request.getRequestDispatcher(INDEX);
 		    requestDispatcher.forward(request, response);
 	    } catch (ServiceException e) {
