@@ -10,10 +10,14 @@
 </head>
 
 <body>
+<jsp:useBean id="error" class="by.maribo.java_beans_handbook.bean.Error" />
+<jsp:setProperty name="error" property="code" value="404" />
+<jsp:setProperty name="error" property="description" value="Страница не найдена" />
 <div class="error">
-    <p class="code">404</p>
-    <p class="message">Страница не найдена.</p>
+    <p class="code"><jsp:getProperty name="error" property="code" /></p>
+    <p class="message"><jsp:getProperty name="error" property="description" /></p>
     <a href="${pageContext.request.contextPath}/index.jsp">На главную страницу</a>
 </div>
+<%@include file="footer.html"%>
 </body>
 </html>

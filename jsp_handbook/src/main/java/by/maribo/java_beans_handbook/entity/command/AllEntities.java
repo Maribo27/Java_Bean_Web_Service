@@ -24,17 +24,17 @@ public class AllEntities implements Command {
 	    EntityService service = ServiceFactory.getInstance().getEntityService();
 	    try {
 	        List<Entity> entities = service.getAllEntities(EJB_INFO.name());
-	        request.setAttribute(EJB_INFO.name(), entities);
+	        request.setAttribute(EJB_INFO.name().toLowerCase(), entities);
 		    entities = service.getAllEntities(EJB_TYPE.name());
-		    request.setAttribute(EJB_TYPE.name(), entities);
+		    request.setAttribute(EJB_TYPE.name().toLowerCase(), entities);
 		    entities = service.getAllEntities(PROPERTY.name());
-		    request.setAttribute(PROPERTY.name(), entities);
+		    request.setAttribute(PROPERTY.name().toLowerCase(), entities);
 		    entities = service.getAllEntities(ROLE.name());
-		    request.setAttribute(ROLE.name(), entities);
+		    request.setAttribute(ROLE.name().toLowerCase(), entities);
 		    entities = service.getAllEntities(RULE.name());
-		    request.setAttribute(RULE.name(), entities);
+		    request.setAttribute(RULE.name().toLowerCase(), entities);
 		    entities = service.getAllEntities(TYPE.name());
-		    request.setAttribute(TYPE.name(), entities);
+		    request.setAttribute(TYPE.name().toLowerCase(), entities);
         } catch (EntityNotFoundException | ServiceException e) {
 	        logger.error(e.getMessage(), e);
 	        response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
