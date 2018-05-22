@@ -11,6 +11,10 @@
     <title>Java Beans Handler | Update</title>
 </head>
 <body>
+<c:if test = "${empty sessionScope.user}">
+    <jsp:forward page="${pageContext.request.contextPath}" />
+</c:if>
+<jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <div itemscope itemtype="http://schema.org/ItemList" class="sidebar-menu">
     <c:forEach items="${requestScope.type}" var="type">
         <h2>

@@ -9,14 +9,18 @@
 </head>
 
 <body>
-<jsp:useBean id="error" class="by.maribo.java_beans_handbook.bean.Error"/>
-<jsp:setProperty name="error" property="code" value="503" />
-<jsp:setProperty name="error" property="description" value="Внутренняя ошибка сервера" />
+<jsp:useBean id="error" class="by.maribo.java_beans_handbook.structure.bean.Error"/>
+<jsp:setProperty name="error" property="code" value="503"/>
+<jsp:setProperty name="error" property="description" value="Внутренняя ошибка сервера"/>
 <div class="error">
-    <p class="code"><jsp:getProperty name="error" property="code" /></p>
-    <p class="message"><jsp:getProperty name="error" property="description" /></p>
+    <p class="code">
+        <jsp:getProperty name="error" property="code"/>
+    </p>
+    <p class="message">
+        <jsp:getProperty name="error" property="description"/>
+    </p>
     <a href="${pageContext.request.contextPath}/index.jsp">На главную страницу</a>
 </div>
-<%@include file="footer.html"%>/>
+<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
 </html>

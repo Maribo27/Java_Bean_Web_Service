@@ -26,6 +26,11 @@
         <location>/serverError</location>
     </error-page>
 
+    <error-page>
+        <error-code>403</error-code>
+        <location>/forbidden</location>
+    </error-page>
+
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>by.maribo.java_beans_handbook.structure.controller.Controller</servlet-class>
@@ -43,6 +48,15 @@
     <servlet-mapping>
         <servlet-name>ServerError</servlet-name>
         <url-pattern>/serverError</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Forbidden</servlet-name>
+        <jsp-file>/WEB-INF/jsp/error/forbidden.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Forbidden</servlet-name>
+        <url-pattern>/forbidden</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -82,6 +96,24 @@
     </filter>
     <filter-mapping>
         <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/java_beans</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>NoCacheFilter</filter-name>
+        <filter-class>by.maribo.java_beans_handbook.structure.filter.NoCacheFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>Access</filter-name>
+        <filter-class>by.maribo.java_beans_handbook.structure.filter.Access</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Access</filter-name>
         <url-pattern>/java_beans</url-pattern>
     </filter-mapping>
 

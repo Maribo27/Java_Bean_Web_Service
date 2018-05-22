@@ -1,4 +1,4 @@
-package by.maribo.java_beans_handbook.bean;
+package by.maribo.java_beans_handbook.structure.bean;
 
 import java.io.Serializable;
 import java.util.Objects;

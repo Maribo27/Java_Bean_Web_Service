@@ -11,7 +11,9 @@
                 <a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=GET_METHOD&id=${method.id}">${method.name}</a>
             </li>
         </c:forEach>
-        <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_METHOD&typeOld=method">+ Добавить</a></li>
+        <c:if test="${not empty sessionScope.user}">
+            <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_METHOD&typeOld=method">+ Добавить</a></li>
+        </c:if>
     </ul>
 </details>
 <details itemscope itemtype="http://schema.org/ItemList">
@@ -22,7 +24,9 @@
                 <a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=GET_ENTITY&id=${property.id}&type=property">${property.name}</a>
             </li>
         </c:forEach>
-        <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=property">+ Добавить</a></li>
+        <c:if test="${not empty sessionScope.user}">
+            <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=property">+ Добавить</a></li>
+        </c:if>
     </ul>
 </details>
 <details itemscope itemtype="http://schema.org/ItemList">
@@ -33,6 +37,8 @@
                 <a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=GET_ENTITY&id=${rule.id}&type=rule">${rule.name}</a>
             </li>
         </c:forEach>
-        <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=rule">+ Добавить</a></li>
+        <c:if test="${not empty sessionScope.user}">
+            <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=rule">+ Добавить</a></li>
+        </c:if>
     </ul>
 </details>

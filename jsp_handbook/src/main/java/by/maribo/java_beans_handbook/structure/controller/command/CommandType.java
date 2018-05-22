@@ -13,5 +13,11 @@ public enum CommandType {
     DELETE_METHOD,
     MODIFY_METHOD,
 
-	MODIFY
+	MODIFY,
+
+	GOOGLE_AUTH,
+	GOOGLE_TOKEN,
+	VK_AUTH,
+	VK_TOKEN,
+	LOG_OUT
 }

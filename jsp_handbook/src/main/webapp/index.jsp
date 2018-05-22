@@ -11,6 +11,7 @@
     <title>Java Beans Handler</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/jsp/header.jsp"/>
 <div itemscope itemtype="http://schema.org/WebPage" class="error">
     <p itemtype="Text" class="message">Добро пожаловать. Это справочник по JavaBeans.</p>
     <a itemtype="url" href="${pageContext.request.contextPath}/java_beans?command=GET_ENTITY&id=1&type=type">Что это такое?</a>

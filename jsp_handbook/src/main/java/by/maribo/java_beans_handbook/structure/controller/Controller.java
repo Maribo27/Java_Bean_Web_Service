@@ -1,5 +1,6 @@
 package by.maribo.java_beans_handbook.structure.controller;
 
+import by.maribo.java_beans_handbook.structure.ControlConst;
 import by.maribo.java_beans_handbook.structure.controller.command.Command;
 import by.maribo.java_beans_handbook.structure.controller.command.CommandDirector;
 import by.maribo.java_beans_handbook.structure.controller.command.CommandType;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Controller extends HttpServlet {
-    private static final String COMMAND = "command";
     private static final String CONTENT_TYPE = "text/html";
     private final CommandDirector director = CommandDirector.getInstance();
 
@@ -26,7 +26,7 @@ public class Controller extends HttpServlet {
         command.execute(request, response);
         command = director.getCommand(CommandType.GET_METHODS.name());
         command.execute(request, response);
-        String commandName = request.getParameter(COMMAND);
+        String commandName = request.getParameter(ControlConst.COMMAND);
         command = director.getCommand(commandName);
         command.execute(request, response);
     }

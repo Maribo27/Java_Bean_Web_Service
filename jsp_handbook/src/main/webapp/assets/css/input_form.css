@@ -5,7 +5,7 @@
     text-align: center;
 
     width: calc(90vw - 230px);
-    margin-top: 10px;
+    margin-top: 50px;
     z-index: 1;
     margin-left: calc(230px + 5vw);
 }
@@ -32,7 +32,7 @@
 }
 
 button,
-input[type="submit"]{
+input[type="submit"] {
     display: inline;
     box-sizing: border-box;
     color: #fff;
@@ -41,11 +41,11 @@ input[type="submit"]{
     width: 30%;
     border: 2px solid #686868;
     font-family: Raleway, sans-serif;
-    font-size:calc(10px + 0.5vw);
+    font-size: calc(10px + 0.5vw);
 }
 
 button,
-input[type="submit"]:hover{
+input[type="submit"]:hover {
     background: #1C1C1C;
 }
 
@@ -53,8 +53,9 @@ button,
 input[type="submit"]:active {
     background: #1AAEB9;
 }
+
 textarea,
-input[type="text"]{
+input[type="text"] {
     font-family: 'Raleway', sans-serif;
     font-size: calc(12px + 0.3vw);
     -moz-transition: all 0.30s ease-in-out;
@@ -66,13 +67,13 @@ input[type="text"]{
     min-height: 30px;
 }
 
-textarea{
+textarea {
     height: 30vh;
     padding: 3%;
     resize: none;
 }
 
-input[type="text"]{
+input[type="text"] {
     height: calc(2.5vw + 2.5vh);
 }
 
@@ -86,4 +87,10 @@ input:not(:focus),
 textarea,
 input[type="text"]:not(:focus) {
     box-shadow: none;
+}
+
+.selection-form {
+    display: table;
+    width: 100%;
+    padding-bottom: calc(10px + 0.5vh);
 }

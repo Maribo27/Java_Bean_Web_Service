@@ -10,7 +10,9 @@
                 <a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=GET_ENTITY&id=${ejb_info.id}&type=ejb_info">${ejb_info.name}</a>
             </li>
         </c:forEach>
-        <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=ejb_info">+ Добавить</a></li>
+        <c:if test="${not empty sessionScope.user}">
+            <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=ejb_info">+ Добавить</a></li>
+        </c:if>
     </ul>
 </details>
 <details itemscope itemtype="http://schema.org/ItemList">
@@ -21,7 +23,9 @@
                 <a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=GET_ENTITY&id=${ejb_type.id}&type=ejb_type">${ejb_type.name}</a>
             </li>
         </c:forEach>
-        <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=ejb_type">+ Добавить</a></li>
+        <c:if test="${not empty sessionScope.user}">
+            <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=ejb_type">+ Добавить</a></li>
+        </c:if>
     </ul>
 </details>
 <details itemscope itemtype="http://schema.org/ItemList">
@@ -32,6 +36,8 @@
                 <a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=GET_ENTITY&id=${role.id}&type=role">${role.name}</a>
             </li>
         </c:forEach>
-        <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=role">+ Добавить</a></li>
+        <c:if test="${not empty sessionScope.user}">
+            <li style="list-style: none;"><a itemprop="url" href="${pageContext.request.contextPath}/java_beans?command=MODIFY&action=ADD_ENTITY&typeOld=role">+ Добавить</a></li>
+        </c:if>
     </ul>
 </details>

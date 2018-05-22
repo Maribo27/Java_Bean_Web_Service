@@ -1,18 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <c:import url="/WEB-INF/jsp/style.jsp"/>
-    <title>Java Beans Handbook | 404</title>
+    <title>Java Beans Handbook | 403</title>
 </head>
 
 <body>
 <jsp:useBean id="error" class="by.maribo.java_beans_handbook.structure.bean.Error"/>
-<jsp:setProperty name="error" property="code" value="404"/>
-<jsp:setProperty name="error" property="description" value="Страница не найдена"/>
+<jsp:setProperty name="error" property="code" value="403"/>
+<jsp:setProperty name="error" property="description" value="Доступ запрещен"/>
 <div class="error">
     <p class="code">
         <jsp:getProperty name="error" property="code"/>
